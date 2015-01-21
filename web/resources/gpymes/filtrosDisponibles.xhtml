@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="bean" type="py.syscvsa.utils.web.BeanGenerico" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:panelGroup>
+            <p:dataGrid columns="1" value="#{cc.attrs.bean.filtrosDisponibles}" var="f"
+                        binding="#{cc.attrs.bean.dataGridDisponibles}"
+                        styleClass="filtrosDisponibles">
+                <p:column>
+                    <h:panelGrid columns="2" id="filtro">
+                        <p:graphicImage value="#{resource['img/filtro.gif']}"/>
+                        <h:outputText value="#{f.nombre}"/>
+                    </h:panelGrid>
+                    <p:draggable for="filtro"   helper="clone" revert="true"/>
+                </p:column>
+            </p:dataGrid>
+        </h:panelGroup>
+    </cc:implementation>
+</html>

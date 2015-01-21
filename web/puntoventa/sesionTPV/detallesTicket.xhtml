@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <div style="overflow-y: auto; width:95%;height:60%;background-color: white;padding: 0; margin: 10px;    " class="detalles raised" id="scrollpanel"
+         >
+        <p:dataGrid value="#{terminalBean.ticketActual.ticketDetalles}" var="d" columns="1" styleClass="detalles">
+            <h:panelGroup>
+                <div style="border-bottom: 1px solid #ddd;">
+                    <table>
+                        <tr>
+                            <td width="85%">
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td style=" font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif; font-size:18px; font-weight: bold">
+                                                #{d.descripcion}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style=" font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif; font-size:16px;">
+
+                                                <strong>#{d.cantidad}</strong>  <p:spacer width="5"/><h:outputText value=" Precio: G #{d.precioUnitario} desc. #{d.porcentajeDescuento}%" rendered="#{(d.porcentajeDescuento &gt; 0)}">
+                                                    <f:convertNumber locale="#{formato.locale}"/>
+                                                </h:outputText>
+
+                                                <h:outputText value="Precio: G  #{d.precioUnitario}" rendered="#{not (d.porcentajeDescuento &gt; 0)}" >
+                                                    <f:convertNumber locale="#{formato.locale}"/>
+                                                </h:outputText>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>   
+
+                            </td>
+                            <td width="15%" style="text-align: right">
+                                <h:outputText value="#{d.total}" style=" font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif; font-size:18px;font-weight: bold">
+                                    <f:convertNumber locale="#{formato.locale}"/>
+                                </h:outputText>
+
+                            </td>
+                            <td>
+                                <p:commandButton value="X" action="#{terminalBean.quitaDetalle(d)}" update="@(.detalles)"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </h:panelGroup>
+        </p:dataGrid>
+        
+        <p:panel styleClass="detalles" style="border:none;border-top: 2px solid #000; width: 200px; float: right;padding-top: 5px;text-align: right;margin-top: 10px;
+             font-size: 16pt; font-weight: bold;">
+        TOTAL: <h:outputText value="#{terminalBean.ticketActual.total}">
+            <f:convertNumber locale="#{formato.locale}"/>
+        </h:outputText>
+    </p:panel>    
+    </div>
+    
+    
+ 
+</ui:composition>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Login</title>
+            </f:facet>
+            
+            <style type="text/css">
+                html, body {
+                    height: 100%
+                }
+            </style>
+        </h:head>
+
+        <h:body style="height: 100%">
+
+            <h:form>
+                <div style="position: absolute; left:10px; top:10px;">
+                    <h:commandButton value="Crear datos de prueba" action="#{mock.creaDatos()}"/>
+                </div>
+            </h:form>
+
+            <table width="100%" height="100%">
+                <tr>
+                    <td valign="middle" align="center">
+                        <p:panel header="INGRESO" style="width: 400px;">
+                            <h:form>
+
+
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Empresa"/>
+                                    <h:panelGrid columns="3">
+                                        <h:selectOneMenu value="#{credencial.empresa}">
+                                            <p:ajax update="sucursal"/>
+                                            <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}"/>
+                                        </h:selectOneMenu>
+                                        <h:outputText value="Sucursal"/>
+                                        <h:selectOneMenu value="#{credencial.sucursal}" id="sucursal">
+                                            <f:selectItems value="#{sucursalBean.itemsAvailableSelectOne}"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGrid>
+
+                                    <h:outputText value="Usuario"/>
+                                    <h:inputText value="#{credencial.usuario.usuario}" id="usuario" style="width: 185px; font-size: 10pt"/>
+                                    <h:outputText value="Contraseña"/>
+                                    <h:inputSecret value="#{credencial.usuario.plainClave}" style="width: 185px; font-size: 10pt"/>
+                                </h:panelGrid>
+                                <h:commandButton value="Login" action="#{autenticador.login()}"/>
+                            </h:form>
+                        </p:panel>              
+                    </td>
+                </tr>
+
+            </table>
+
+
+
+        </h:body>
+
+    </f:view>
+
+</html>
+

@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:gpymes="http://java.sun.com/jsf/composite/gpymes">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="filtro" type="py.syscvsa.utils.persistencia.FiltroAutoComplete" required="true"/>
+        <cc:attribute name="bean" type="py.syscvsa.utils.web.BeanGenerico" required="true"/>
+        <cc:attribute name="convertidorId" required="true"/>
+        <cc:attribute name="action" targets="botonAplica" required="true"/>
+        <cc:attribute name="widgetVar"/>
+        <cc:attribute name="titulo"/>
+        <cc:attribute name="oncomplete"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    
+    <cc:implementation>
+
+        <p:dialog header="#{cc.attrs.titulo}" widgetVar="#{cc.attrs.widgetVar}" resizable="false" draggable="false"  
+                  width="480" showEffect="fade" hideEffect="explode" modal="true">  
+            
+            <p:outputPanel id="display">
+                
+            
+
+                <h:panelGrid  columns="2" cellpadding="4">  
+                    <h:outputText value="Elegir varios:" />  
+                    <p:selectBooleanCheckbox value="#{cc.attrs.filtro.varios}">
+                        <p:ajax update="display pnlUno pnlVarios"/>
+                    </p:selectBooleanCheckbox>
+                </h:panelGrid>
+
+                <p:separator/>
+
+                <p:outputPanel rendered="#{not cc.attrs.filtro.varios}" id="pnlUno" styleClass="criterio">
+
+                    <h:panelGrid  columns="2" cellpadding="4">  
+                        <h:outputText value="#{cc.attrs.filtro.nombre}" />  
+                        <gpymes:autoComplete bean="#{cc.attrs.bean}" 
+                                             convertidorId="#{cc.attrs.convertidorId}" 
+                                             elegido="#{cc.attrs.filtro.elegido}"/>
+                    </h:panelGrid>  
+                </p:outputPanel>
+
+                <p:outputPanel rendered="#{cc.attrs.filtro.varios}" id="pnlVarios" styleClass="criterio">
+                    <p:pickList value="#{cc.attrs.filtro.dualList}" var="p" itemLabel="#{p.toString()}" itemValue="#{p}">
+                        <f:converter converterId="#{cc.attrs.convertidorId}" />
+                        <f:facet name="sourceCaption">Disponibles</f:facet>
+                        <f:facet name="targetCaption">Seleccionados</f:facet>
+                    </p:pickList>
+                </p:outputPanel>
+
+                <p:separator/>
+
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Aplica" id="botonAplica" oncomplete="#{cc.attrs.oncomplete}"
+                                     update="@(.resultado, .dropArea)"/>
+                    <p:commandButton value="Cierra" oncomplete="#{cc.attrs.oncomplete}" immediate="true"/>
+                </h:panelGrid>
+            </p:outputPanel>
+        </p:dialog>  
+
+    </cc:implementation>
+</html>

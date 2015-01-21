@@ -5,12 +5,14 @@
 package py.gestion.stock.persistencia;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import py.gestion.adm.persistencia.Estado;
 import py.gestion.adm.persistencia.ImpuestoIVA;
 import py.gestion.adm.persistencia.TipoCosto;
+
 
 /**
  *
@@ -43,6 +45,7 @@ public class Producto implements Serializable {
     private Double costoLifo;
     private Double costoPonderado;
     private Double costo;
+    private BigDecimal precioVenta;
     private boolean inventariable;
     @ManyToOne
     private UnidadMedida unidadMedida;
@@ -67,6 +70,16 @@ public class Producto implements Serializable {
         this.codigo = codigo;
         this.nombre = nombre;
     }
+
+    public Producto(Long id, String codigo, String nombre, ImpuestoIVA iva, BigDecimal precioVenta) {
+        this.id = id;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.iva = iva;
+        this.precioVenta = precioVenta;
+    }
+    
+    
 
     public Long getVersion() {
         return version;
@@ -219,6 +232,24 @@ public class Producto implements Serializable {
     public void setGenerarCodigo(boolean generarCodigo) {
         this.generarCodigo = generarCodigo;
     }
+
+    public BigDecimal getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(BigDecimal precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+    
+    
 
     @Override
     public int hashCode() {

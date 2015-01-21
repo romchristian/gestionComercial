@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:metadata>
+        <f:viewAction action="#{diarioTreeBean.cargaDatos()}"/>
+    </f:metadata>
+
+    <ui:decorate template="/contabilidad/plantillaListado.xhtml">
+
+        <ui:define name="titulo">
+            Diarios
+        </ui:define>
+
+        <ui:define name="acciones">
+            <p:commandButton action="#{diarioBean.preparaCreacion()}" 
+                             value="Nuevo"
+                             rendered="#{autorizador.hayPermisoAccion('CreaOrdenCompra')}"
+                             styleClass="botonVerde flotaIzquierda"/>
+        </ui:define>
+
+        <ui:define name="tabla">
+            <p:tree value="#{diarioTreeBean.rootNode}" var="node" style="width: 90%;height: 80%">
+                <p:treeNode>
+                    <h:link value="#{node.descripcion}" outcome="edita">
+                        <f:param name="id" value="#{node.id}"/>
+                    </h:link>
+                </p:treeNode>
+            </p:tree>
+        </ui:define>
+    </ui:decorate>
+</ui:composition>

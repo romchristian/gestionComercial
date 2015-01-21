@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+
+
+
+    </cc:interface>
+ 
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:panelGrid columns="5">
+            <h:outputText value=""/>
+
+            <h:selectOneMenu value="#{compContactoTelefonico.contacto.tipo}">
+                <f:selectItems value="#{productorEnums.obtTiposContactosTelefonicos()}"/>
+            </h:selectOneMenu>                   
+
+            <h:outputText value="Numero"/>
+            <h:inputText value="#{compContactoTelefonico.contacto.numero}"/>
+            <h:commandButton image="/imagenes/add.png" id="agrega" action="#{compContactoTelefonico.agrega()}"/>
+        </h:panelGrid>
+
+        <p:outputPanel styleClass="tablaContactos">
+            <p:dataTable value="#{compContactoTelefonico.lista}" var="c">
+                <p:column>
+                    <f:facet name="header">
+                        Tipo
+                    </f:facet>
+                    <h:outputText value="#{c.tipo}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        Número
+                    </f:facet>
+                    <h:outputText value="#{c.numero}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        Principal
+                    </f:facet>
+                    <p:selectBooleanButton value="#{c.principal}" onLabel="Si" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close">  
+                        <p:ajax update="@(.tablaContactos)" 
+                                listener="#{compContactoTelefonico.marcaPrincipal(c)}"/>  
+                    </p:selectBooleanButton> 
+
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        Estado
+                    </f:facet>
+                    <h:selectOneMenu value="#{c.estado}">
+                        <f:selectItems value="#{productorEnums.obtEstadosContactosTelefonicos()}"/>
+                    </h:selectOneMenu>
+                </p:column>
+
+                <p:column headerText="Acción">
+                    <h:commandLink value="Remover" actionListener="#{compContactoTelefonico.remueve(c)}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:outputPanel>
+
+    </cc:implementation>
+</html>

@@ -1,0 +1,257 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+ 
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="disabled"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:outputPanel id="panelDetFactura">
+
+            <p:focus for="cod"/>
+            <h:panelGroup rendered="#{not cc.attrs.disabled}" styleClass="tabla">
+                <div style="background-color: #dddddd">
+
+
+
+                    <table style="font-size: 9pt">
+                        <tr>
+                            <td style="text-align: left;vertical-align: middle" colspan="2">
+                                COD
+                            </td>
+                            <td style="text-align: left">
+                                DESCRIPCIÓN
+                            </td>
+                            <td style="text-align: left">
+                                IVA
+                            </td>
+                            <td style="text-align: left">
+                                CANT.
+                            </td>
+                            <td style="text-align: left" valign="middle"> 
+                                U.M.
+                            </td>
+                            <td colspan="2" style="text-align: left">
+                                PRECIO
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;vertical-align: middle">
+                                <p:inputText value="#{compDetFacturaProveedor.producto.codigo}" id="cod" style="width: 150px" styleClass="tabla"/>
+                            </td>
+                            <td style="text-align: left;vertical-align: middle">
+                                <h:commandLink action="#{compDetFacturaProveedor.busca()}" styleClass="btn btn-info link-text-blanco">
+                                    <p:ajax update="@this @(.tabla)" process="@this @(.tabla)"/>
+                                    <i class="icon-search icon-white"></i>
+                                </h:commandLink>
+                            </td>
+                            <td style="text-align: left">
+                                <p:inputText value="#{compDetFacturaProveedor.descripcion}" style="width: 200px" styleClass="tabla"/>
+                            </td>
+                            <td style="text-align: left">
+                                <p:inputText value="#{compDetFacturaProveedor.iva}" style="width: 50px" styleClass="tabla"/>
+                            </td>
+                            <td style="text-align: left">
+                                <p:inputText value="#{compDetFacturaProveedor.cantidad}" style="width: 150px" styleClass="tabla"/>
+                            </td>
+                            <td style="text-align: left">
+                                <h:selectOneMenu value="#{compDetFacturaProveedor.unidadMedida}" style="width: 150px" styleClass="tabla">
+                                    <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectOne}"/>
+                                </h:selectOneMenu>
+                            </td>
+                            <td style="text-align: left">
+                                <p:inputText value="#{compDetFacturaProveedor.precio}" style="width: 150px" styleClass="tabla"/>
+                            </td>
+                            <td style="text-align: left">
+                                <h:commandLink action="#{compDetFacturaProveedor.agregaDetalle()}" styleClass="btn  btn-success link-text-blanco">
+                                    <p:ajax update="@this @(.tabla)" process="@this @(.tabla)"/>
+                                    <i class="icon-plus-sign icon-white"></i>
+                                </h:commandLink>
+                            </td>
+
+                        </tr>
+                    </table>
+
+                </div>
+
+            </h:panelGroup>
+
+            <p:contextMenu for="detalles">  
+                <p:menuitem value="Quitar" update="detalles" icon="ui-icon-close" actionListener="#{compDetFacturaProveedor.quitaDetalle()}"/>  
+            </p:contextMenu>
+
+
+            <p:dataTable value="#{compDetFacturaProveedor.detalles}" id="detalles" style="font-size: 9pt"
+                         editable="true" editMode="cell" rowKey="#{d.indice}"
+                         var="d" styleClass="tabla" selection="#{compDetFacturaProveedor.detalleElegido}" selectionMode="single">
+
+
+                <p:column headerText="COD" style="font-size: 9pt;text-align: center;width:10%">
+                    <h:outputText value="#{d.producto.codigo}"/>
+                </p:column>
+
+                <p:column headerText="DESCRIPCIÓN" style="font-size: 9pt;" width="15%">
+                    <p:cellEditor>  
+                        <f:facet name="output"><h:outputText value="#{d.descripcion}"/></f:facet>  
+                        <f:facet name="input"><p:inputText value="#{d.descripcion}"/> </f:facet>  
+                    </p:cellEditor>  
+                </p:column>
+
+                <p:column headerText="CANT" style="font-size: 9pt;text-align: right;width:10%">
+                    <!--                    <p:cellEditor>  
+                                            <f:facet name="output">
+                                                <h:outputText value="#{d.cantidad}">
+                                                    <f:convertNumber locale="es,py"/>
+                                                </h:outputText>
+                                            </f:facet>  
+                                            <f:facet name="input">
+                                                <p:inputText value="#{d.cantidad}">
+                                                    <p:ajax event="keyup" update="detalles" />  
+                                                </p:inputText>
+                                            </f:facet>  
+                                        </p:cellEditor>  -->
+                    <p:inputText value="#{d.cantidad}" size="4">
+                        <p:ajax event="blur" update="detalles" />  
+                    </p:inputText>
+                </p:column>
+
+                <p:column headerText="U.M." style="font-size: 9pt;text-align: center;width:10%">
+                    <h:outputText value="#{d.unidadMedida.nombre}"/>
+                </p:column>
+
+                <p:column headerText="PRECIO" style="font-size: 9pt;text-align: right;width:10%" >
+                    <!--                    <p:cellEditor>  
+                                            <f:facet name="output"><h:outputText value="#{d.monto}">
+                                                    <f:convertNumber locale="es,py"  currencySymbol="Gs."/>
+                                                </h:outputText>
+                                            </f:facet>  
+                                            <f:facet name="input">
+                                                <p:inputText value="#{d.monto}">
+                                                    <p:ajax event="keyup" update="detalles" />  
+                                                </p:inputText>
+                                            </f:facet>  
+                                        </p:cellEditor>  -->
+
+                    <p:inputText value="#{d.monto}" size="10">
+                        <p:ajax event="blur" update="detalles" />  
+                    </p:inputText>
+                </p:column>
+
+                <p:column headerText="EXENTA" style="font-size: 9pt;text-align: right;width:10%;font-weight: bold">
+                    <p:cellEditor>  
+                        <f:facet name="output"><h:outputText value="#{d.exenta}">
+                                <f:convertNumber locale="es,py"  currencySymbol="Gs."/>
+                            </h:outputText>
+                        </f:facet>  
+                        <f:facet name="input"><p:inputText value="#{d.exenta}"/> </f:facet>  
+                    </p:cellEditor>  
+                    <f:facet name="footer">
+                        <h:outputText value="#{compDetFacturaProveedor.subtotalExenta}" styleClass="tabla">
+                            <f:convertNumber locale="es,py"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+                <p:column headerText="%5" style="font-size: 9pt;text-align: right;width:10%;font-weight: bold">
+                    <p:cellEditor>  
+                        <f:facet name="output"><h:outputText value="#{d.gravada05}">
+                                <f:convertNumber locale="es,py"  currencySymbol="Gs."/>
+                            </h:outputText>
+                        </f:facet>  
+                        <f:facet name="input"><p:inputText value="#{d.gravada05}"/> </f:facet>  
+                    </p:cellEditor>  
+                    <f:facet name="footer">
+                        <h:outputText value="#{compDetFacturaProveedor.subtotalGravada05}" styleClass="tabla">
+                            <f:convertNumber locale="es,py"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+
+                <p:column headerText="%10" style="font-size: 9pt;text-align: right;width:10%;font-weight: bold">
+                    <p:cellEditor>  
+                        <f:facet name="output"><h:outputText value="#{d.gravada10}" style="font-weight:bold">
+                                <f:convertNumber locale="es,py"  currencySymbol="Gs."/>
+                            </h:outputText>
+                        </f:facet>  
+                        <f:facet name="input"><p:inputText value="#{d.gravada10}"/> </f:facet>  
+                    </p:cellEditor>  
+                    <f:facet name="footer">
+                        <h:outputText value="#{compDetFacturaProveedor.subtotalGravada10}" styleClass="tabla">
+                            <f:convertNumber locale="es,py"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+                <f:facet name="footer">  
+                    <h:panelGroup>
+                        
+                        <table>
+                            <tr>
+                                <td width="10%" style="border: none;">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td width="33%" style="border: none;">
+                                                    <h:panelGrid columns="2" >
+                                                        <h:outputText value="IVA 05"/>
+                                                        <h:outputText value="#{compDetFacturaProveedor.iva05.doubleValue()}">
+                                                            <f:convertNumber locale="es,py"/>
+                                                        </h:outputText>
+                                                    </h:panelGrid>
+                                                </td>
+                                                <td width="33%" style="border: none;">
+                                                    <h:panelGrid columns="2" >
+                                                        <h:outputText value="IVA 10"/>
+                                                        <h:outputText value="#{compDetFacturaProveedor.iva10.doubleValue()}">
+                                                            <f:convertNumber locale="es,py"/>
+                                                        </h:outputText>
+                                                    </h:panelGrid>
+                                                </td>
+                                                <td width="33%" style="border: none;">
+                                                    <h:panelGrid columns="2" >
+                                                        <h:outputText value="TOTAL IVA"/>
+                                                        <h:outputText value="#{compDetFacturaProveedor.totalIva.doubleValue()}">
+                                                            <f:convertNumber locale="es,py"/>
+                                                        </h:outputText>
+                                                    </h:panelGrid>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td width="10%" align="right" style="border: none;">
+                                    <div>
+
+                                        <table>
+                                            <tr>
+                                                <td width="50%" align="right" style="border: none;">
+                                                    <h:outputText value="TOTAL" style="color:#0174DF; font-size: 18pt; font-family: sans-serif;font-weight: bolder"/>
+                                                </td>
+                                                <td width="50%" align="right" style="border: none;padding: 0;margin: 0">
+                                                    <h:outputText value="#{compDetFacturaProveedor.total.doubleValue()}" style="color:#0174DF; font-size: 18pt; font-family: sans-serif; font-weight: bolder">
+                                                        <f:convertNumber locale="es,py"/>
+                                                    </h:outputText>
+                                                </td>
+                                            </tr>
+                                        </table> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:panelGroup>
+
+                </f:facet>
+
+            </p:dataTable>
+
+
+
+        </p:outputPanel>
+    </cc:implementation>
+</html>

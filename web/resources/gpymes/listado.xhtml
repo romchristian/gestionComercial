@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="bean" type="py.syscvsa.utils.web.BeanGenerico" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:dataTable value="#{cc.attrs.bean.findAllFiltros()}" var="o" styleClass="resultado"
+                     style="width: 100%; font-size: 8pt" binding="#{components.tbl}">
+
+
+            <p:column style="font-size: 9pt" exportable="false">
+                <h:commandButton action="#{cc.attrs.bean.preparaEdicion(o)}" image="/imagenes/edit.png" rendered="#{autorizador.hayPermisoAccion('EditaOrdenCompra')}"/>
+            </p:column>
+            
+            <p:columns value="#{cc.attrs.bean.columnas}" var="col" columnIndexVar="colIndex" style="#{col.estilo}">  
+                <f:facet name="header">  
+                    <h:outputText value="#{col.header}"/>
+                </f:facet>
+                <h:outputText value="#{o[col.property]}" rendered="#{col.tipo eq 'Date'}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+                <h:outputText value="#{o[col.property]}" rendered="#{col.tipo eq 'Long' or col.tipo eq 'long' or col.tipo eq 'Integer' or col.tipo eq 'int' or col.tipo eq 'Double' or col.tipo eq 'double' or col.tipo eq 'BigDecimal'}">
+                    <f:convertNumber locale="#{formato.locale}" maxFractionDigits="2"/>
+                </h:outputText>  
+                <h:outputText value="#{o[col.property]}" rendered="#{col.tipo eq 'String'}">
+                </h:outputText>
+                <h:outputText value="#{o[col.property].toString()}" rendered="#{not (col.tipo eq 'Long' or col.tipo eq 'long' or col.tipo eq 'Integer' or col.tipo eq 'int' or col.tipo eq 'Double' or col.tipo eq 'double' or col.tipo eq 'Long' or col.tipo eq 'long' or col.tipo eq 'Integer' or col.tipo eq 'int' or col.tipo eq 'Double' or col.tipo eq 'Date' or col.tipo eq 'String' or col.tipo eq 'BigDecimal')}">
+                </h:outputText>
+
+                <f:facet name="footer" rendered="#{col.totalizable}" class="derecha">  
+
+                    <h:outputText value="#{cc.attrs.bean.mapTotales[col.property]}" style="text-align: right">
+                        <f:convertNumber locale="#{formato.locale}" maxFractionDigits="2"/>
+                    </h:outputText>
+
+                </f:facet>
+                
+            </p:columns>
+        </p:dataTable>
+    </cc:implementation>
+</html>

@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="id"/>
+        <cc:attribute name="descripcionPorDefecto"/>
+        <cc:attribute name="value"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <p:inputText id="#{cc.attrs.id}" value="#{cc.attrs.value}" styleClass="descripcionPrincipal"/>
+        
+
+    </cc:implementation>
+</html>

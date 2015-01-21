@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:decorate template="/puntoventa/plantillaModulo.xhtml">
+        <ui:define name="cuerpo">
+            <h:panelGroup rendered="#{autorizador.hayPermiso('VisualizaOrdenCompra')}">
+                <h:form>
+                    <div style="height: 75px;width: 100%; background-color: #ddd;vertical-align: middle;">
+
+                        <p:commandButton action="#{puntoVentaBean.preparaCreacion()}" 
+                                         value="Nuevo"
+                                         rendered="#{autorizador.hayPermisoAccion('CreaOrdenCompra')}"
+                                         styleClass="botonVerde flotaIzquierda"/>
+                    </div>
+
+                    <p:dataTable value="#{puntoVentaBean.findAll()}" var="p" styleClass="resultado" rendered="#{not empty puntoVentaBean.findAll()}">
+                        <p:column headerText="Nro">
+                            <h:outputText value="#{p.nombre}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Acciones">
+                            <h:commandButton action="#{puntoVentaBean.preparaEdicion(o)}" value="Editar" rendered="#{autorizador.hayPermisoAccion('EditaOrdenCompra')}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:decorate>
+</ui:composition>

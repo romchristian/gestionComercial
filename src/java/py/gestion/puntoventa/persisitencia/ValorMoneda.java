@@ -4,6 +4,7 @@
  */
 package py.gestion.puntoventa.persisitencia;
 
+import py.gestion.contabilidad.persistencia.MetodoPago;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Entity;

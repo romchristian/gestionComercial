@@ -1,0 +1,96 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+ 
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="bean" type="py.syscvsa.utils.web.jsf.componentes.CompDetalle" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+        <table>
+            <tr>
+                <td width="20%" align="left">
+                    <div>
+                        <table>
+                            <tr>
+                                <td style="text-align: left;vertical-align: middle">
+                                    <p:inputText value="#{cc.attrs.bean['producto'].codigo}" id="cod" style="width: 150px" styleClass="tabla">
+                                        <p:ajax event="blur" listener="#{cc.attrs.bean.busca()}" update="@this @(.tabla)"
+                                                process="@this @(.tabla)"/>
+                                    </p:inputText>
+                                </td>
+                                <td style="text-align: left;vertical-align: middle">
+                                    <h:commandLink action="#{cc.attrs.bean.busca()}" styleClass="btn btn-info link-text-blanco">
+                                        <p:ajax update="@this @(.tabla)" process="@this @(.tabla)"/>
+                                        <i class="icon-search icon-white"></i>
+                                    </h:commandLink>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+                <td width="50%" align="left">
+                    <p:dataGrid var="col" value="#{cc.attrs.bean.columnasDisponibles}" columns="#{cc.attrs.bean.columnasDisponibles.size()}" styleClass="tabla">
+                        
+                        <p:selectOneMenu value="#{cc.attrs.bean[col.property]}" rendered="#{col.selectOne}">
+                            <f:selectItems value="#{col.beanObject.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:calendar value="#{cc.attrs.bean[col.property]}" rendered="#{col.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:calendar>
+                        <h:inputText value="#{cc.attrs.bean[col.property]}" rendered="#{col.tipo eq 'Long' or col.tipo eq 'long' or col.tipo eq 'Integer' or col.tipo eq 'int' or col.tipo eq 'Double' or col.tipo eq 'double'}">
+                            <f:convertNumber locale="es,py"/>
+                        </h:inputText>
+                        <h:inputText value="#{cc.attrs.bean[col.property]}" rendered="#{col.tipo eq 'String'}">
+                        </h:inputText>
+                    </p:dataGrid> 
+                </td>
+                <td width="30%" align="left">
+                    <h:commandLink action="#{cc.attrs.bean.agregaDetalle()}" styleClass="btn  btn-success link-text-blanco">
+                        <p:ajax update="@this @(.tabla)" process="@this @(.tabla)"/>
+                        <i class="icon-plus-sign icon-white"></i>
+                    </h:commandLink>
+                </td>
+            </tr>
+        </table>
+
+
+        <p:contextMenu for="detalles">  
+            <p:menuitem value="Quitar" update="detalles" icon="ui-icon-close" actionListener="#{cc.attrs.bean.quitaDetalle()}"/>  
+        </p:contextMenu>
+
+        <p:dataTable value="#{cc.attrs.bean.detalles}" var="o" styleClass="tabla" id="detalles"
+                     style="width: 100%; font-size: 8pt"  rowKey="#{o['indice']}"
+                     selection="#{cc.attrs.bean['itemElegido']}" selectionMode="single">
+            
+            <p:columns value="#{cc.attrs.bean.columnasDisponibles}" var="col" columnIndexVar="colIndex" style="font-size: 9pt">  
+                
+                <f:facet name="header">  
+                    #{col.header}
+                </f:facet>
+                
+                <h:outputText value="#{o[col.property]}" rendered="#{col.tipo eq 'Date'}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+                
+                <h:outputText value="#{o[col.property]}" rendered="#{col.tipo eq 'Long' or col.tipo eq 'long' or col.tipo eq 'Integer' or col.tipo eq 'int' or col.tipo eq 'Double' or col.tipo eq 'double'}">
+                    <f:convertNumber locale="es,py"/>
+                </h:outputText>
+                
+                <h:outputText value="#{o[col.property]}" rendered="#{col.tipo eq 'String'}"/>
+                <h:outputText value="#{o[col.property].toString()}" rendered="#{col.selectOne}"/>
+                
+            </p:columns>
+
+        </p:dataTable>
+        
+        
+    </cc:implementation>
+</html>

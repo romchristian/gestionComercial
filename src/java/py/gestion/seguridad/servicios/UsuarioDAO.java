@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import py.gestion.adm.persistencia.validadores.ValidadorCedula;
+//import py.gestion.adm.persistencia.validadores.ValidadorCedula;
 import py.gestion.utils.servicios.excepciones.DocumentoDuplicadoExcepction;
 import py.gestion.seguridad.web.Credencial;
 import py.gestion.utils.servicios.ABMService;
@@ -32,25 +32,25 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
     private ABMService abmService;
     @Inject
     private Credencial credencial;
-    @Inject
-    private ValidadorCedula validadorDocumento;
+//    @Inject
+//    private ValidadorCedula validadorDocumento;
 
     @Override
     public Usuario create(Usuario entity) {
         Usuario R = null;
-        try {
+//        try {
 
             entity.setEmpresa(credencial.getEmpresa());
             entity.setSucursal(credencial.getSucursal());
-            if (validadorDocumento.hayDocumento(entity)) {
-                throw new DocumentoDuplicadoExcepction(entity);
-            }
+//            if (validadorDocumento.hayDocumento(entity)) {
+//                throw new DocumentoDuplicadoExcepction(entity);
+//            }
 
             R = abmService.create(entity);
 
-        } catch (DocumentoDuplicadoExcepction e) {
-            JsfUtil.addErrorMessage(e.getMessage());
-        }
+//        } catch (DocumentoDuplicadoExcepction e) {
+//            JsfUtil.addErrorMessage(e.getMessage());
+//        }
         return R;
     }
 

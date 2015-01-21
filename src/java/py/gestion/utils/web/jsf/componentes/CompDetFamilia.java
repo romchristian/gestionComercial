@@ -7,13 +7,10 @@ package py.gestion.utils.web.jsf.componentes;
 import java.io.Serializable;
 import java.util.*;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import py.gestion.stock.persistencia.Familia;
+
 
 /**
  *

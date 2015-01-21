@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+
+
+        <cc:attribute name="lblFamilia"/>
+        <cc:attribute name="lblRemover"/>
+        <cc:attribute name="toggleable"/>
+        <cc:attribute name="collapsed"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+        <table>
+
+            <tr>                      
+                <td style="text-align: left">
+                    <h:selectOneMenu value="#{compDetFamilia.familia}">
+                        <f:selectItems value="#{familiaBean.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </td>
+                <td style="text-align: left">
+                    <h:commandButton action="#{compDetFamilia.agrega()}" image="/imagenes/add.png"/>
+                </td>
+            </tr>
+        </table>
+
+        <p:dataTable value="#{compDetFamilia.familias}" 
+                     var="f">
+
+            <p:column headerText="Cod">
+                <h:outputText value="#{f.cod}"/>
+            </p:column>
+
+            <p:column headerText="Nombre">
+                <h:outputText value="#{f.nombre}"/>
+            </p:column>
+
+            <p:column headerText="Acción">
+                <h:commandLink value="#{cc.attrs.lblRemover}" actionListener="#{compDetFamilia.remover(f)}"/>
+            </p:column>
+        </p:dataTable>
+
+
+
+
+
+    </cc:implementation>
+</html>

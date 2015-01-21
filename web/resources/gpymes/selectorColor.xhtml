@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="lblNoSelecionado"/>
+        <cc:attribute name="elegido" type="py.syscvsa.jpa.stock.Color"/>
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <p:selectOneMenu value="#{cc.attrs.elegido}"
+                         effect="fade" var="c" style="width:160px" converter="Color">  
+            <f:selectItem itemLabel="#{cc.attrs.lblNoSelecionado}" itemValue="" />  
+            <f:selectItems value="#{compColor.colores}" var="color" itemLabel="#{color.nombre}" itemValue="#{color}"/>  
+
+            <p:column>  
+                <h:panelGroup style="width: 48px; height: 48px; background-color: #{c.codHex};color:#{c.codHex} ">
+                    _____
+                </h:panelGroup>
+            </p:column>  
+
+            <p:column>  
+                #{c.nombre}
+            </p:column>  
+        </p:selectOneMenu>  
+
+
+    </cc:implementation>
+</html>

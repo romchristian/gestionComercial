@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="bean" type="py.syscvsa.utils.persistencia.FiltroCadena" required="true"/>
+        <cc:attribute name="action" targets="botonAplica" required="true"/>
+        <cc:attribute name="widgetVar"/>
+        <cc:attribute name="titulo"/>
+        <cc:attribute name="oncomplete"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <p:dialog header="#{cc.attrs.titulo}" widgetVar="#{cc.attrs.widgetVar}" resizable="false" draggable="false"  
+                  width="480" showEffect="fade" hideEffect="explode" modal="true">  
+            
+                <h:panelGrid  columns="2" cellpadding="4">  
+                    <h:outputText value="#{cc.attrs.bean.nombre}" />  
+                    <p:inputText value="#{cc.attrs.bean.cadena}"/>
+                </h:panelGrid>  
+                <p:separator/>
+
+
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Aplica" id="botonAplica" oncomplete="#{cc.attrs.oncomplete}"
+                                     update="@(.resultado, .dropArea)"/>
+                    <p:commandButton value="Cierra" oncomplete="#{cc.attrs.oncomplete}" immediate="true"/>
+                </h:panelGrid>
+
+        </p:dialog>  
+        
+    </cc:implementation>
+</html>

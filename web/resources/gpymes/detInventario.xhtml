@@ -1,0 +1,100 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="lblCod"/>
+        <cc:attribute name="lblDesc"/>
+        <cc:attribute name="lblCant"/>
+
+        <cc:attribute name="lblColCod"/>
+        <cc:attribute name="lblColDesc"/>
+        <cc:attribute name="lblColCant"/>
+        <cc:attribute name="lblColOperacion"/>
+        <cc:attribute name="lblRemover"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:outputPanel id="panelDetInventario">
+
+            <p:focus for="cod"/>
+            <div style="background-color: #dddddd">
+                <p:separator/>
+                <table>
+                    <tr>
+                        <td colspan="2" style="text-align: left">
+                            #{cc.attrs.lblCod}
+                        </td>
+                        <td style="text-align: left">
+                            #{cc.attrs.lblCant}
+                        </td>
+                        <td colspan="2" style="text-align: left">
+                            #{cc.attrs.lblDesc}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left">
+                            <p:inputText value="#{compDetInventario.producto.codigo}" id="cod"/>
+                        </td>
+                        <td style="text-align: left">
+                            <h:commandButton action="#{compDetInventario.busca()}" image="/imagenes/search.png"/>
+                        </td>
+                        <td style="text-align: left">
+                            <p:inputText value="#{compDetInventario.cantidad}"/>
+                        </td>
+                        <td style="text-align: left">
+                            <p:inputText value="#{compDetInventario.producto.nombre}"/>
+                        </td>
+                        <td style="text-align: left">
+                            <h:commandButton action="#{compDetInventario.agrega()}" image="/imagenes/add.png"/>
+                        </td>
+                        <td width="90%" style="text-align: right">
+                            <p:selectBooleanButton value="#{compDetInventario.verificarTodo}"
+                                                   onLabel="Desmarcar todo"
+                                                   offLabel="Marcar todo">
+                                <p:ajax update="detalles" listener="#{compDetInventario.verificaTodos}"/> 
+                            </p:selectBooleanButton>
+                        </td>
+                    </tr>
+                </table>
+                <p:separator/>
+            </div>
+
+            <p:dataTable value="#{compDetInventario.detalles}" id="detalles"
+                         var="d">
+                <p:column headerText="#{cc.attrs.lblColCod}">
+                    <h:outputText value="#{d.cod}"/>
+                </p:column>
+                <p:column headerText="#{cc.attrs.lblColDesc}">
+                    <h:inputText value="#{d.descripcion}"/>
+                </p:column>
+                <p:column headerText="#{cc.attrs.lblColCant} SISTEMA">
+                    <h:outputText value="#{d.cantidadSistema}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2"
+                                         type="number"
+                                         locale="#{formato.locale}"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{cc.attrs.lblColCant}">
+                    <h:inputText value="#{d.cantidad}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2"
+                                         type="number"
+                                         locale="#{formato.locale}"/>
+                    </h:inputText>
+                </p:column>
+                <p:column headerText="VERIFICADO">
+                    <p:selectBooleanButton value="#{d.verificado}" onLabel="SI" offLabel="NO"/>
+                </p:column>
+
+                <p:column headerText="#{cc.attrs.lblColOperacion}">
+                    <h:commandLink value="#{cc.attrs.lblRemover}" actionListener="#{compDetInventario.remover(d)}"/>
+                </p:column>
+            </p:dataTable>
+        </p:outputPanel>
+    </cc:implementation>
+</html>

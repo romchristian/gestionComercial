@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- INTERFACE -->
+    <cc:interface> 
+        <cc:attribute name="elegido" type="py.syscvsa.proveedores.persistencia.Proveedor"/>
+        <cc:attribute name="id" />
+        <cc:attribute name="disabled"/>
+        <cc:attribute name="required"/>
+        <cc:attribute method-signature="void actionListener(org.primefaces.event.SelectEvent)" name="listener"/>
+        <cc:attribute name="update"/>
+        <cc:attribute name="updateOnBlur"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        
+        <p:autoComplete value="#{cc.attrs.elegido}"  id="#{cc.attrs.id}" required="#{cc.attrs.required}"
+                        completeMethod="#{autoCompleteProveedor.completar}" disabled="#{cc.attrs.disabled}"
+                        forceSelection="true" converter="proveedorConverter" var="p" itemValue="#{p}" itemLabel="#{p.nombre}">
+           
+            <c:if test="#{cc.getValueExpression('listener') != null}">
+                <p:ajax event="itemSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.listener}"/>
+            </c:if>
+            <c:if test="#{cc.getValueExpression('update') != null}">
+                <p:ajax event="blur" update="#{cc.attrs.updateOnBlur} @(.mensajes)" process="#{cc.attrs.updateOnBlur}"/>
+            </c:if>
+            
+            <f:facet name="header">
+                <a href="#">Buscar mas..</a>
+            </f:facet>
+        </p:autoComplete>
+        
+    </cc:implementation>
+</html>

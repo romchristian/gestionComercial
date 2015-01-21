@@ -13,9 +13,7 @@ import py.gestion.seguridad.persistencia.Accion;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,9 +29,9 @@ import py.gestion.adm.servicios.EmpresaDAO;
 import py.gestion.adm.servicios.ImpuestoIVADAO;
 import py.gestion.adm.servicios.MonedaDAO;
 import py.gestion.adm.servicios.SucursalDAO;
-import py.gestion.cobranza.servicios.CobranzaService;
-import py.gestion.cobranza.servicios.PagoDAO;
-import py.gestion.proveedores.servicios.ProveedorService;
+//import py.gestion.cobranza.servicios.CobranzaService;
+//import py.gestion.cobranza.servicios.PagoDAO;
+
 import py.gestion.stock.servicios.ProductoDAO;
 import py.gestion.adm.persistencia.ConfRed;
 import py.gestion.adm.persistencia.Cotizacion;
@@ -42,39 +40,31 @@ import py.gestion.adm.persistencia.Empresa;
 import py.gestion.adm.persistencia.ImpuestoIVA;
 import py.gestion.adm.persistencia.Moneda;
 import py.gestion.adm.persistencia.Nacionalidad;
-import py.gestion.adm.persistencia.Obra;
 import py.gestion.adm.persistencia.Sucursal;
+import py.gestion.adm.persistencia.enums.TipoDocumento;
 import py.gestion.adm.servicios.CotizacionDAO;
-import py.gestion.adm.servicios.ObraDAO;
+
 import py.gestion.adm.servicios.PaisDAO;
-import py.gestion.clientes.persistencia.DetCuentaCliente;
-import py.gestion.clientes.persistencia.OperacionDesembolsoPrestamo;
-import py.gestion.clientes.persistencia.enums.TipoDocumento;
-import py.gestion.cobranza.persistencia.CobroCuota;
-import py.gestion.cobranza.persistencia.DetCobroCuota;
-import py.gestion.cobranza.persistencia.Efectivo;
-import py.gestion.compra.persistencia.DetFacturaProveedor;
-import py.gestion.compra.persistencia.DetFacturaProveedorProducto;
-import py.gestion.compra.persistencia.DetOrdenCompra;
-import py.gestion.compra.persistencia.FacturaProveedor;
-import py.gestion.compra.persistencia.OrdenCompra;
-import py.gestion.compra.persistencia.enums.EstadoFacturaProveedor;
-import py.gestion.compra.persistencia.enums.EstadoOC;
-import py.gestion.compra.servicios.AsociacionOC_FPDAO;
-import py.gestion.compra.servicios.FacturaProveedorDAO;
-import py.gestion.compra.servicios.FormularioHechaukaDAO;
-import py.gestion.compra.servicios.OrdenCompraDAO;
-import py.gestion.pagos.persistencia.EstadoOrdenPago;
-import py.gestion.pagos.servicios.OrdenPagoDAO;
-import py.gestion.proveedores.persistencia.Proveedor;
-import py.gestion.prestamos.persistencia.PeriodoPago;
-import py.gestion.prestamos.persistencia.Prestamo;
-import py.gestion.prestamos.persistencia.SistemaAmortizacion;
-import py.gestion.proveedores.persistencia.ProveedorTimbrado;
-import py.gestion.stock.persistencia.Color;
+import py.gestion.contabilidad.persistencia.Diario;
+import py.gestion.contabilidad.persistencia.MetodoPago;
+import py.gestion.puntoventa.persisitencia.PuntoVenta;
+import py.gestion.puntoventa.persisitencia.Secuencia;
+import py.gestion.puntoventa.persisitencia.SesionTPV;
+import py.gestion.puntoventa.persisitencia.TipoMetodoPago;
+import py.gestion.contabilidad.servicio.DiarioDAO;
+import py.gestion.contabilidad.servicio.MetodoPagoDAO;
+import py.gestion.puntoventa.servicio.PuntoVentaDAO;
+import py.gestion.puntoventa.servicio.SecuenciaDAO;
+import py.gestion.puntoventa.servicio.SesionTPVDAO;
+import py.gestion.puntoventa.servicio.ValorMonedaDAO;
 import py.gestion.stock.persistencia.Producto;
 import py.gestion.stock.persistencia.UnidadMedida;
 import py.gestion.stock.servicios.UnidadMedidaDAO;
+
+//import py.gestion.cobranza.persistencia.CobroCuota;
+//import py.gestion.cobranza.persistencia.DetCobroCuota;
+//import py.gestion.cobranza.persistencia.Efectivo;
+
 
 /**
  *
@@ -93,8 +83,7 @@ public class Mock implements Serializable {
     private RolDAO rolDAO;
     @EJB
     private UsuarioDAO usuarioDAO;
-    @EJB
-    private ProveedorService proveedorDAO;
+    
     @EJB
     private AccionDAO accionDAO;
     @EJB
@@ -110,26 +99,13 @@ public class Mock implements Serializable {
     @EJB
     private ConfRedDAO confRedDAO;
     @EJB
-    private PagoDAO pagoDAO;
-    @EJB
-    private CobranzaService cobranzaService;
-    @EJB
     private PaisDAO paisDAO;
-    @EJB
-    private ObraDAO obraDAO;
+    
     @EJB
     private UnidadMedidaDAO unidadMedidaDAO;
-    @EJB
-    private FacturaProveedorDAO facturaProveedorDAO;
-    @EJB
-    private OrdenCompraDAO ordenCompraDAO;
-    @EJB
-    private AsociacionOC_FPDAO asociacionOC_FPDAO;
-    @EJB
-    private FormularioHechaukaDAO formularioHechuakaDAO;
+    
     private List<Producto> productos;
-    private List<Color> colores;
-    private List<Proveedor> proveedores;
+    
     private List<Rol> roles;
     private List<Usuario> usuarios;
     private List<ImpuestoIVA> impuestoIVAs;
@@ -138,14 +114,26 @@ public class Mock implements Serializable {
     private List<Empresa> empresas;
     private List<Sucursal> sucursales;
     private ConfRed confRed;
-    private Prestamo prestamo;
-    private Nacionalidad nacionalidad;
     private UnidadMedida unidadMedida;
-    private Obra obra;
+    
+    private Nacionalidad nacionalidad;
+    
+    
+      @EJB
+    private DiarioDAO diarioDAO;
     @EJB
-    private OrdenPagoDAO ordenPagoDAO;
-    private FacturaProveedor facturaProveedor;
-    @PersistenceContext(unitName = "SYSCVSAPU")
+    private MetodoPagoDAO metodoPagoDAO;
+    @EJB
+    private SecuenciaDAO secuenciaDAO;
+    @EJB
+    private PuntoVentaDAO puntoVentaDAO;
+    @EJB
+    private ValorMonedaDAO valorMonedaDAO;
+    @EJB
+    private SesionTPVDAO sesionTPVDAO;
+    
+    
+    @PersistenceContext(unitName = "GestionComercialPU")
     private EntityManager em;
     @Resource
     private javax.transaction.UserTransaction utx;
@@ -156,13 +144,7 @@ public class Mock implements Serializable {
     public void creaDatos() {
 
         limpiaUsuarios();
-        if (colores == null) {
-            creaColores();
-        }
-
-        if (proveedores == null) {
-            creaProveedores();
-        }
+    
         if (roles == null) {
             creaRoles();
         }
@@ -193,45 +175,57 @@ public class Mock implements Serializable {
         if (confRed == null) {
             creaConfRed();
         }
-        if (prestamo == null) {
-            creaPrestamo();
-        }
+    
 
         if (unidadMedida == null) {
             creaUnidadMedida();
         }
-        if (obra == null) {
-            creaObra();
-        }
-
-        if (facturaProveedor == null) {
-            creaFacturaProveedor();
-        }
-
-        CreaEstadOrdenPago();
         
         creaVista();
+        
+        creaDatosTPV();
 
     }
 
-    private void creaColores() {
-        colores = new ArrayList<Color>();
-        colores.add(new Color("Negro", "Black", "ne", "#000000"));
-        colores.add(new Color("Rojo", "Red", "ro", "#990000"));
-        colores.add(new Color("Amarillo", "Yellow", "am", "#CCCC00"));
-        colores.add(new Color("Verde", "Green", "ve", "#33CC00"));
-        colores.add(new Color("Dorado", "Gold", "do", "#FF9900"));
-        for (Color c : colores) {
-            colorDAO.create(c);
-        }
+    public void creaDatosTPV() {
+        Diario diario = new Diario();
+        diario.setDescripcion("Diario");
+        diarioDAO.create(diario);
+
+        MetodoPago mp = new MetodoPago();
+        mp.setControlEfectivo(true);
+        mp.setTipoMetodoPago(TipoMetodoPago.EFECTIVO);
+        mp.setDiario(diario);
+        metodoPagoDAO.create(mp);
+
+        Secuencia s = new Secuencia();
+        s.setNombre("Ticket");
+        s.setValorInicial(1L);
+        s.setValorFinal(100L);
+        secuenciaDAO.create(s);
+
+        PuntoVenta pv = new PuntoVenta();
+        pv.setDiario(diario);
+        pv.setNombre("TPV1");
+        pv.setSecuencia(s);
+        puntoVentaDAO.create(pv);
+
+        SesionTPV stpv = new SesionTPV();
+        stpv.setPuntoVenta(pv);
+        sesionTPVDAO.create(stpv);
+
     }
 
     private void creaProductos(ImpuestoIVA i) {
         productos = new ArrayList<Producto>();
-        productos.add(new Producto(1L, "01", "P1"));
-        productos.add(new Producto(2L, "02", "P2"));
-        productos.add(new Producto(3L, "03", "P3"));
-        productos.add(new Producto(4L, "04", "P4"));
+        productos.add(new Producto(1L, "01", "Jugo Naranja 200ml Watts", i, new BigDecimal(10000)));
+        productos.add(new Producto(2L, "02", "Coca cola 1000ml", i, new BigDecimal(5000)));
+        productos.add(new Producto(3L, "03", "Pepsi Cola 2000ml", i, new BigDecimal(8000)));
+        productos.add(new Producto(4L, "04", "Pilsen 1000ml", i, new BigDecimal(5000)));
+        productos.add(new Producto(5L, "05", "Coca 2000ml", i, new BigDecimal(7000)));
+        productos.add(new Producto(6L, "06", "Chocalate 100 grs", i, new BigDecimal(4000)));
+        productos.add(new Producto(7L, "07", "Papa fritas 500 grs", i, new BigDecimal(4500)));
+        productos.add(new Producto(8L, "08", "Galletitas Tippi 500 grs", i, new BigDecimal(2500)));
         for (Producto p : productos) {
             p.setIva(i);
             productoDAO.create(p);
@@ -252,30 +246,7 @@ public class Mock implements Serializable {
         creaProductos(imp);
     }
 
-    private void creaProveedores() {
 
-        proveedores = new ArrayList<Proveedor>();
-        proveedores.add(new Proveedor("Pepe", "123456", "pe", 2));
-        proveedores.add(new Proveedor("Pedro", "123", "pd", 3));
-        proveedores.add(new Proveedor("Pablo", "456", "pa", 4));
-        proveedores.add(new Proveedor("Juan", "874", "ju", 5));
-        proveedores.add(new Proveedor("Alberto", "4531", "al", 6));
-        proveedores.add(new Proveedor("Martin", "3213", "ma", 7));
-        proveedores.add(new Proveedor("Luis", "35123", "lu", 8));
-
-        int cont = 1;
-        for (Proveedor p : proveedores) {
-            List<ProveedorTimbrado> timbrados = new ArrayList<ProveedorTimbrado>();
-            GregorianCalendar gc = new GregorianCalendar();
-            gc.setTime(new Date());
-            gc.add(Calendar.YEAR, 1);
-            timbrados.add(new ProveedorTimbrado(p, 1234567L + cont, "001", "001", gc.getTime()));
-            p.setTimbrados(timbrados);
-            proveedorDAO.create(p);
-            cont++;
-        }
-
-    }
 
     private void creaRoles() {
 
@@ -412,127 +383,14 @@ public class Mock implements Serializable {
         confRedDAO.create(confRed);
     }
 
-    private void creaPrestamo() {
-        prestamo = new Prestamo();
-
-        prestamo.setCapital(1000000);
-        prestamo.setGastos(200000);
-        prestamo.setPlazo(12);
-        prestamo.setTasa(24);
-        prestamo.setPeriodoPago(PeriodoPago.MENSUAL);
-        prestamo.setSistemaAmortizacion(SistemaAmortizacion.FRANCES);
-
-        DetCuentaCliente de = new OperacionDesembolsoPrestamo(prestamo);
-
-    }
-
-    public Prestamo getPrestamo() {
-        return prestamo;
-    }
-
-    public void paga(Prestamo prestamo) {
-        CobroCuota cc = new CobroCuota(prestamo);
-        Efectivo efe = new Efectivo();
-        efe.setFecha(new Date());
-        efe.setMoneda(monedaDAO.find("Guaraníes"));
-        efe.setMonto(50000d);
-        pagoDAO.create(efe);
-
-        DetCobroCuota dcc = new DetCobroCuota();
-        dcc.setPago(efe);
-        dcc.setMonto(efe.getMonto());
-        dcc.setCobroCuota(cc);
-        dcc.setDetPrestamo(prestamo.getDetalles().get(0));
-        dcc.setFecha(new Date());
-        List<DetCobroCuota> detallesCobro = new ArrayList<DetCobroCuota>();
-        detallesCobro.add(dcc);
-        cc.setDetalles(detallesCobro);
-
-        cobranzaService.create(cc);
-    }
+    
 
     private void creaUnidadMedida() {
         unidadMedida = new UnidadMedida("Kilo");
         unidadMedidaDAO.create(unidadMedida);
     }
 
-    private void creaObra() {
-        obra = new Obra("Obra1");
-        obraDAO.create(obra);
-    }
-
-    private void creaFacturaProveedor() {
-
-        Proveedor p = null;
-        for (Proveedor pv : proveedores) {
-            p = pv;
-            break;
-        }
-
-        facturaProveedor = new FacturaProveedor();
-        facturaProveedor.setCreacion(new Date());
-        facturaProveedor.setEmision(new Date());
-        facturaProveedor.setNumero("1");
-        facturaProveedor.setTimbrado("1234567");
-        facturaProveedor.setCodigoEstablecimiento("001");
-        facturaProveedor.setCodigoSucursal("001");
-        facturaProveedor.setEstado(EstadoFacturaProveedor.CONFORMADA);
-        facturaProveedor.setMoneda(monedaDAO.find("Guaraníes"));
-
-        facturaProveedor.setProveedor(p);
-
-        DetFacturaProveedor d1 = new DetFacturaProveedorProducto(productoDAO.findPorCodigoEstricto("01"),
-                facturaProveedor, 1, 10, unidadMedida, "producto 1", 0.1d, 15000d, 0d, 0d, 15000d);
-        DetFacturaProveedor d2 = new DetFacturaProveedorProducto(productoDAO.findPorCodigoEstricto("02"),
-                facturaProveedor, 1, 20, unidadMedida, "producto 2", 0.1d, 20000d, 0d, 0d, 20000d);
-        List<DetFacturaProveedor> detalles = new ArrayList<DetFacturaProveedor>();
-        detalles.add(d1);
-        detalles.add(d2);
-        facturaProveedor.setDetalles(detalles);
-        facturaProveedor.setTotal(new BigDecimal(35000d));
-        facturaProveedorDAO.create(facturaProveedor);
-
-        OrdenCompra oc = new OrdenCompra();
-        oc.setCreacion(new Date());
-        oc.setEstado(EstadoOC.PENDIENTE_AUTORIZACION);
-        oc.setMoneda(monedaDAO.find("Guaraníes"));
-        oc.setNumero("1");
-        oc.setObra(obra);
-        oc.setProveedor(p);
-
-        DetOrdenCompra doc1 = new DetOrdenCompra(oc, productoDAO.findPorCodigoEstricto("01"), "producto 1", unidadMedida, 10d, 18000d);
-        DetOrdenCompra doc2 = new DetOrdenCompra(oc, productoDAO.findPorCodigoEstricto("02"), "producto 2", unidadMedida, 18d, 21000d);
-        List<DetOrdenCompra> dets = new ArrayList<DetOrdenCompra>();
-        dets.add(doc1);
-        dets.add(doc2);
-        oc.setDetalles(dets);
-
-        ordenCompraDAO.create(oc);
-
-        OrdenCompra oc2 = new OrdenCompra();
-        oc2.setCreacion(new Date());
-        oc2.setEstado(EstadoOC.PENDIENTE_AUTORIZACION);
-        oc2.setMoneda(monedaDAO.find("Guaraníes"));
-        oc2.setNumero("2");
-        oc2.setObra(obra);
-        oc2.setProveedor(p);
-
-        DetOrdenCompra doc11 = new DetOrdenCompra(oc2, productoDAO.findPorCodigoEstricto("01"), "producto 1", unidadMedida, 5d, 50000d);
-        DetOrdenCompra doc22 = new DetOrdenCompra(oc2, productoDAO.findPorCodigoEstricto("02"), "producto 2", unidadMedida, 15d, 10000d);
-        DetOrdenCompra doc3 = new DetOrdenCompra(oc2, productoDAO.findPorCodigoEstricto("03"), "producto 3", unidadMedida, 20d, 15000d);
-        List<DetOrdenCompra> dets2 = new ArrayList<DetOrdenCompra>();
-        dets2.add(doc11);
-        dets2.add(doc22);
-        dets2.add(doc3);
-        oc2.setDetalles(dets2);
-
-        ordenCompraDAO.create(oc2);
-
-        asociacionOC_FPDAO.asociaOC_FP(doc1, d1);
-        asociacionOC_FPDAO.asociaOC_FP(doc2, d2);
-
-       // formularioHechuakaDAO.creaFormularioHechauka(new Periodo(2013, 6), empresas.get(0), usuarios.get(0));
-    }
+    
 
     private void limpiaUsuarios() {
         delete();
@@ -582,15 +440,4 @@ public class Mock implements Serializable {
         cotizacionDAO.create(cotizacion);
     }
 
-    private void CreaEstadOrdenPago() {
-        EstadoOrdenPago estado1 = new EstadoOrdenPago();
-        estado1.setNombre("CREADA");
-        ordenPagoDAO.create(estado1);
-        EstadoOrdenPago estado2 = new EstadoOrdenPago();
-        estado2.setNombre("PENDIENTE");
-        ordenPagoDAO.create(estado2);
-        EstadoOrdenPago estado3 = new EstadoOrdenPago();
-        estado3.setNombre("PAGADA");
-        ordenPagoDAO.create(estado3);
-    }
 }

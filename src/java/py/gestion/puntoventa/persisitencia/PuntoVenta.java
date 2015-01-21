@@ -4,6 +4,8 @@
  */
 package py.gestion.puntoventa.persisitencia;
 
+import py.gestion.contabilidad.persistencia.MetodoPago;
+import py.gestion.contabilidad.persistencia.Diario;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;

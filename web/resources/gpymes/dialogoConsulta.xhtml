@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="bean" type="py.syscvsa.utils.web.BeanGenerico" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:dialog header="Guarda Consulta" widgetVar="consulta" resizable="false">  
+            <h:form>  
+                <h:panelGrid columns="1">
+                    <p:outputLabel value="Nombre" for="nombreConsulta"/>
+                    <p:inputText id="nombreConsulta"  value="#{cc.attrs.bean.consultaActual.nombre}"/>
+                    <p:commandButton action="#{cc.attrs.bean.guardaConsulta()}" value="Guardar"
+                                     update="@(.resultado, .dropArea, .filtrosDisponibles)" oncomplete="consulta.hide();"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+    </cc:implementation>
+</html>

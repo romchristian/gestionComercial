@@ -1,0 +1,110 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="disabled"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:outputPanel id="panelDetOrdenCompra">
+
+            <p:focus for="cod"/>
+            <h:panelGroup rendered="#{not cc.attrs.disabled}">
+                <div style="background-color: #dddddd">
+                    <p:separator/>
+                    <table>
+                        <tr>
+                            <td colspan="2" style="text-align: left">
+                                COD
+                            </td>
+                            <td style="text-align: left">
+                                DESCRIPCIÓN
+                            </td>
+                            <td style="text-align: left">
+                                CANT.
+                            </td>
+                            <td style="text-align: left">
+                                U.M.
+                            </td>
+                            <td colspan="2" style="text-align: left">
+                                COSTO
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left">
+                                <p:inputText value="#{compDetOrdenCompra.producto.codigo}" id="cod" size="8"/>
+                            </td>
+                            <td style="text-align: left">
+                                <h:commandButton action="#{compDetOrdenCompra.busca()}" image="/imagenes/search.png" />
+                            </td>
+                            <td style="text-align: left">
+                                <p:inputText value="#{compDetOrdenCompra.descripcion}"/>
+                            </td>
+                            <td style="text-align: left">
+                                <p:inputText value="#{compDetOrdenCompra.cantidad}" size="5"/>
+                            </td>
+                            <td style="text-align: left">
+                                <p:selectOneMenu value="#{compDetOrdenCompra.unidadMedida}">
+                                    <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectOne}"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td style="text-align: left">
+                                <p:inputText value="#{compDetOrdenCompra.costo}" size="10"/>
+                            </td>
+                            <td style="text-align: left">
+                                <h:commandButton action="#{compDetOrdenCompra.agregaDetalle()}" image="#{resource['img/nuevo.png']}"/>
+                            </td>
+
+                        </tr>
+                    </table>
+                    <p:separator/>
+                </div>
+
+            </h:panelGroup>
+            <p:dataTable value="#{compDetOrdenCompra.detalles}" id="detalles"
+                         var="d">
+                <p:column headerText="COD">
+                    <h:outputText value="#{d.producto.codigo}"/>
+                </p:column>
+                <p:column headerText="DESCRIPCIÓN">
+                    <h:inputText value="#{d.descripcion}" rendered="#{not cc.attrs.disabled}"/>
+                    <h:outputText value="#{d.descripcion}" rendered="#{cc.attrs.disabled}"/>
+                </p:column>
+                <p:column headerText="CANT">
+                    <h:outputText value="#{d.cantidadSolicitada}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2"
+                                         type="number"
+                                         locale="#{formato.locale}"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="U.M.">
+                    <h:outputText value="#{d.unidadMedida.nombre}"/>
+                </p:column>
+
+                <p:column headerText="COSTO">
+                    <h:inputText value="#{d.precioPactado}" rendered="#{not cc.attrs.disabled}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2"
+                                         type="number"
+                                         locale="#{formato.locale}"/>
+                    </h:inputText>
+                    <h:outputText value="#{d.precioPactado}" rendered="#{cc.attrs.disabled}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2"
+                                         type="number"
+                                         locale="#{formato.locale}"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="ACCIÓN">
+                    <h:commandLink value="Quitar" actionListener="#{compDetOrdenCompra.quitaDetalle(d)}" rendered="#{not cc.attrs.disabled}"/>
+                </p:column>
+            </p:dataTable>
+        </p:outputPanel>
+    </cc:implementation>
+</html>

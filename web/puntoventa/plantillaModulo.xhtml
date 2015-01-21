@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/util/plantilla.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:gp="http://java.sun.com/jsf/composite/gpymes">
+
+    <ui:define name="menuModulos">
+        <ui:include src="/util/modulos.xhtml"/>
+    </ui:define>
+
+    
+    
+    <ui:define name="menuLateral">
+        
+
+        <h:outputText value="General" style="font-size: 14px;color: #0077b3; padding-left: 10px;font-weight: bold;margin-bottom: 10px"/>
+        <br/>
+
+        <ul>
+            <li><a href="/gestionComercial/puntoventa/sesionTPV/listado.xhtml" class="menuLabel">Sesiones</a></li>
+            
+        </ul>
+        
+        <h:outputText value="Configuracion" style="font-size: 14px;color: #0077b3; padding-left: 10px;font-weight: bold;margin-bottom: 10px"/>
+        <br/>
+
+        <ul>
+            <li><a href="/gestionComercial/puntoventa/terminal/listado.xhtml" class="menuLabel">Terminal Punto de Venta</a></li>
+            <li><a href="/gestionComercial/puntoventa/secuencia/listado.xhtml" class="menuLabel">Secuencias</a></li>
+            
+            
+        </ul>
+
+    </ui:define>
+
+    <ui:define name="cuerpo">
+        <ui:insert name="cuerpo"/>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:gpymes="http://java.sun.com/jsf/composite/gpymes">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="bean" type="py.syscvsa.utils.web.BeanGenerico" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:panelGroup>
+
+            
+            <p:fieldset id="filtrosSeleccionados" style="background-color: #ddd; text-align: center;">  
+
+                <p:outputPanel  styleClass="dropArea">  
+
+
+
+                    <div class="row-fluid" style="padding: 0px;margin: 0px;">
+                        <div class="span1" style="padding: 0px;margin: 0px;text-align: left">
+                            
+                        </div>
+                        <div class="span11" style="padding: 0px;margin: 0px;">
+                            <h:outputText value="¡Arrastra los Filtros!"  
+                                          rendered="#{empty cc.attrs.bean.filtrosSeleccionados}"
+                                          styleClass="relieve"/>  
+
+                            <p:dataGrid var="f" value="#{cc.attrs.bean.filtrosSeleccionados}"  
+                                        id="filtroS"
+                                        rendered="#{not empty cc.attrs.bean.filtrosSeleccionados}"
+                                        columns="6">  
+
+
+                                <p:column>  
+
+                                    <h:panelGrid columns="3" id="filtro2" style="font-size: 9pt">
+                                        <!--                                <p:graphicImage value="/imagenes/filtro.gif" width="16px"/>-->
+                                        <h:outputText value="#{f.nombre}"/>
+                                        <h:panelGrid columns="2">
+                                            <h:commandLink>
+                                                <p:graphicImage value="#{resource['img/edit.png']}" alt="" width="12px"/>
+                                                <p:ajax event="click" oncomplete="#{f.openDialog}"
+                                                        update="@(.resultado, .dropArea, .filtrosDisponibles)"/>
+                                            </h:commandLink>
+                                            <h:commandLink>
+                                                <p:graphicImage value="#{resource['img/delete.png']}" alt="" width="12px"/>
+                                                <p:ajax listener="#{cc.attrs.bean.quitarFiltro(f)}" 
+                                                        update="@(.resultado, .dropArea, .filtrosDisponibles)"/>
+                                            </h:commandLink>
+                                        </h:panelGrid>
+
+                                    </h:panelGrid>
+
+                                </p:column>  
+
+                            </p:dataGrid>
+                        </div>
+                    </div>
+
+
+
+                </p:outputPanel> 
+
+            </p:fieldset>
+
+            <p:droppable tolerance="touch" for="filtrosSeleccionados"
+                         activeStyleClass="ui-state-highlight"
+                         datasource=":#{cc.attrs.bean.dataGridDisponibles.clientId}" onDrop="handleDrop">  
+                <p:ajax listener="#{cc.attrs.bean.onCarDrop}" update=":#{cc.attrs.bean.dataGridDisponibles.clientId} @(.resultado, .dropArea)"/>  
+            </p:droppable>  
+        </h:panelGroup>
+    </cc:implementation>
+</html>

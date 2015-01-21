@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import py.gestion.adm.persistencia.Moneda;
 
+
 /**
  *
  * @author emelgarejo

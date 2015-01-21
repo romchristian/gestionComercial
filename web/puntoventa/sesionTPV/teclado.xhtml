@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <table style="margin: 0px auto 0px auto;">
+        <tr>
+            <td>
+                <div>
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                               
+                                    <p:commandButton value="Cantidad" styleClass="botonesTecladoOperacion" 
+                                                     action="#{terminalBean.operacionCantidad()}"
+                                                     update="@(.detalles)"/>
+                               
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >
+                                
+                                    <p:commandButton value="P.U." styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.operacionPU()}"
+                                                     update="@(.detalles)"/>
+                                
+                            </td>
+                            <td>
+                                
+                                    <p:commandButton value="%D" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.operacionDesc()}"
+                                                     update="@(.detalles)"/>
+                               
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                               
+                                <p:commandButton value="Efectivo" styleClass="botonesTecladoOperacion"  action="#{terminalBean.pagaEfetivo()}"
+                                                 update="@(.panelIzquierdo)"/>
+                               
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                               
+                                <p:commandButton value="Tarjeta" styleClass="botonesTecladoOperacion"  action="#{terminalBean.pagaTarjeta()}"
+                                                     update="@(.panelIzquierdo)"/>
+                               
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <div>
+                                    <p:commandButton value="1" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.uno()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <p:commandButton value="2" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.dos()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <p:commandButton value="3" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.tres()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <p:commandButton value="4" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.cuatro()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <p:commandButton value="5" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.cinco()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <p:commandButton value="6" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.seis()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <p:commandButton value="7" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.siete()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <p:commandButton value="8" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.ocho()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <p:commandButton value="9" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.nueve()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <p:commandButton value="," styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.coma()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <p:commandButton value="0" styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.cero()}"
+                                                     update="@(.detalles)"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <p:commandButton value="0," styleClass="botonesTeclado" 
+                                                     action="#{terminalBean.ceroComna()}"
+                                                     update="@(.detalles)"/>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>               
+</ui:composition>

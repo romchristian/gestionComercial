@@ -6,7 +6,7 @@ package py.gestion.adm.persistencia;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import py.gestion.clientes.persistencia.enums.TipoDocumento;
+import py.gestion.adm.persistencia.enums.TipoDocumento;
 
 /**
  *

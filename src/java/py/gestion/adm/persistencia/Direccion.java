@@ -12,8 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import py.gestion.clientes.persistencia.Cliente;
-import py.gestion.clientes.persistencia.enums.TipoDireccion;
+//import py.gestion.clientes.persistencia.Cliente;
+//import py.gestion.clientes.persistencia.enums.TipoDireccion;
 
 /**
  *
@@ -26,8 +26,8 @@ public class Direccion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private TipoDireccion tipo;
+//    @Enumerated(EnumType.STRING)
+//    private TipoDireccion tipo;
     private String direccion;
     private String nrocasa;
     @ManyToOne
@@ -35,21 +35,21 @@ public class Direccion implements Serializable {
     private boolean principal;
     @Enumerated(EnumType.STRING)
     private Estado estado;
-    @ManyToOne
-    private Cliente cliente;
+//    @ManyToOne
+//    private Cliente cliente;
 
     public Direccion() {
         estado = Estado.ACTIVO;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-    
+//    public Cliente getCliente() {
+//        return cliente;
+//    }
+//
+//    public void setCliente(Cliente cliente) {
+//        this.cliente = cliente;
+//    }
+//    
     
     
 
@@ -85,13 +85,13 @@ public class Direccion implements Serializable {
         this.direccion = direccion;
     }
 
-    public TipoDireccion getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoDireccion tipo) {
-        this.tipo = tipo;
-    }
+//    public TipoDireccion getTipo() {
+//        return tipo;
+//    }
+//
+//    public void setTipo(TipoDireccion tipo) {
+//        this.tipo = tipo;
+//    }
 
     public Localidad getLocalidad() {
         return localidad;
@@ -130,34 +130,34 @@ public class Direccion implements Serializable {
     }
 
     
-    public boolean igual(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Direccion other = (Direccion) obj;
-        if (this.tipo != other.tipo) {
-            return false;
-        }
-        if ((this.direccion == null) ? (other.direccion != null) : !this.direccion.equals(other.direccion)) {
-            return false;
-        }
-        if ((this.nrocasa == null) ? (other.nrocasa != null) : !this.nrocasa.equals(other.nrocasa)) {
-            return false;
-        }
-        if (this.localidad != other.localidad && (this.localidad == null || !this.localidad.equals(other.localidad))) {
-            return false;
-        }
-        if (this.principal != other.principal) {
-            return false;
-        }
-        if (this.estado != other.estado) {
-            return false;
-        }
-        return true;
-    }
+//    public boolean igual(Object obj) {
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (getClass() != obj.getClass()) {
+//            return false;
+//        }
+//        final Direccion other = (Direccion) obj;
+//        if (this.tipo != other.tipo) {
+//            return false;
+//        }
+//        if ((this.direccion == null) ? (other.direccion != null) : !this.direccion.equals(other.direccion)) {
+//            return false;
+//        }
+//        if ((this.nrocasa == null) ? (other.nrocasa != null) : !this.nrocasa.equals(other.nrocasa)) {
+//            return false;
+//        }
+//        if (this.localidad != other.localidad && (this.localidad == null || !this.localidad.equals(other.localidad))) {
+//            return false;
+//        }
+//        if (this.principal != other.principal) {
+//            return false;
+//        }
+//        if (this.estado != other.estado) {
+//            return false;
+//        }
+//        return true;
+//    }
     
     
 

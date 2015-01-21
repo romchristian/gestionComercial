@@ -1,0 +1,121 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:gpymes="http://java.sun.com/jsf/composite/gpymes">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        
+        <div style="background-color: buttonface;border: 1px solid #aaa; padding: 5px">
+
+            <table>
+
+                <tr>                      
+                    <td style="text-align: left; font-weight: bold">
+                        Tipo Dirección 
+                    </td>
+                    <td style="text-align: left; font-weight: bold">
+                        Calle
+                    </td>
+                    <td style="text-align: left; font-weight: bold">
+                        Nro 
+                    </td>
+                    <td style="text-align: left; font-weight: bold" colspan="3">
+                        Localidad / Barrio
+                    </td>
+
+                </tr>
+                <tr>                      
+                    <td style="text-align: left">
+                        <h:selectOneMenu value="#{compDirecciones.direccion.tipo}">
+                            <f:selectItems value="#{productorEnums.obtTiposDireccion()}"/>
+                        </h:selectOneMenu>
+                    </td>
+                    <td style="text-align: left">
+                        <h:inputText value="#{compDirecciones.direccion.direccion}" style="width: 300px"/>
+                    </td>
+                    <td style="text-align: left">
+                        <h:inputText value="#{compDirecciones.direccion.nrocasa}" style="width: 70px"/>
+                    </td>
+                    <td style="text-align: left">
+                        <gpymes:popupLocalidad/>
+                    </td>
+                    <td style="text-align: left">
+                        <p:spacer width="30"/>
+                    </td>
+                    <td style="text-align: left">
+                        <h:commandButton action="#{compDirecciones.agrega()}" image="/imagenes/add.png"/>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+
+
+
+
+        <p:dataTable value="#{compDirecciones.lista}" 
+                     var="d" styleClass="tablaDirecciones">
+
+            <p:column headerText="Tipo">
+                <h:outputText value="#{d.tipo}"/>
+            </p:column>
+
+            <p:column headerText="Dirección">
+                <h:outputText value="#{d.direccion}"/>
+            </p:column>
+
+            <p:column headerText="Nro">
+                <h:outputText value="#{d.nrocasa}"/>
+            </p:column>
+
+            <p:column headerText="Departamento">
+                <h:outputText value="#{d.localidad.distrito.departamento.nombre}"/>
+            </p:column>
+
+            <p:column headerText="Distrito">
+                <h:outputText value="#{d.localidad.distrito.nombre}"/>
+            </p:column>
+
+            <p:column headerText="Localidad">
+                <h:outputText value="#{d.localidad.nombre}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    Principal
+                </f:facet>
+                <p:selectBooleanButton value="#{d.principal}" onLabel="Si" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close">  
+                    <p:ajax update="@(.tablaDirecciones)" 
+                            listener="#{compDirecciones.marcaPrincipal(d)}"/>  
+                </p:selectBooleanButton> 
+
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    Estado
+                </f:facet>
+                <h:selectOneMenu value="#{d.estado}">
+                    <f:selectItems value="#{productorEnums.obtEstados()}"/>
+                </h:selectOneMenu>
+            </p:column>
+
+            <p:column headerText="Acción">
+                <h:commandLink value="Remover" actionListener="#{compDirecciones.remueve(d)}"/>
+            </p:column>
+        </p:dataTable>
+
+
+
+    </cc:implementation>
+</html>

@@ -12,7 +12,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import py.gestion.adm.persistencia.Moneda;
+
 
 /**
  *
@@ -53,7 +53,7 @@ public class Ticket implements Serializable {
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TicketDetalle> ticketDetalles;
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FormaPago> ticketFormasPago;
+    private List<TicketPagos> ticketPagos;
 
     public Ticket() {
     }
@@ -83,11 +83,22 @@ public class Ticket implements Serializable {
             ticketDetalles.add(d);
         }
 
+        calculaTotal();
+
+    }
+
+    public void addTicketPago(TicketPagos p) {
+        if (ticketPagos == null) {
+            ticketPagos = new ArrayList<TicketPagos>();
+        }
+        ticketPagos.add(p);
+    }
+
+    public void calculaTotal() {
         total = new BigDecimal(0);
         for (TicketDetalle dt : ticketDetalles) {
             total = total.add(dt.getTotal());
         }
-
         System.out.println("Total: " + total);
     }
 
@@ -110,18 +121,17 @@ public class Ticket implements Serializable {
     public void remueveDetalle(TicketDetalle d) {
         if (ticketDetalles != null) {
 
-            
             Iterator<TicketDetalle> it = ticketDetalles.iterator();
-            
+
             int UltimoIndice = 0;
-            for(int i= 0; i < ticketDetalles.size();i++){
+            for (int i = 0; i < ticketDetalles.size(); i++) {
                 TicketDetalle dt = ticketDetalles.get(i);
-                if(d.getLinea().equals(dt.getLinea())){
+                if (d.getLinea().equals(dt.getLinea())) {
                     UltimoIndice = i;
                     break;
                 }
             }
-            
+
             ticketDetalles.remove(UltimoIndice);
 
             total = new BigDecimal(0);
@@ -147,13 +157,6 @@ public class Ticket implements Serializable {
         totalNeto = total.subtract(totalIVA);
         System.out.println("Total IVA: " + totalIVA);
         System.out.println("Total Neto: " + totalNeto);
-    }
-
-    public void addFormaPago(FormaPago fp) {
-        if (ticketFormasPago == null) {
-            ticketFormasPago = new ArrayList<FormaPago>();
-        }
-        ticketFormasPago.add(fp);
     }
 
     public Long getId() {
@@ -254,7 +257,7 @@ public class Ticket implements Serializable {
 
     public List<TicketDetalle> getTicketDetalles() {
         if (ticketDetalles == null) {
-            ticketDetalles = new ArrayList<TicketDetalle>();
+            ticketDetalles = new ArrayList<>();
         }
         return ticketDetalles;
     }
@@ -263,12 +266,15 @@ public class Ticket implements Serializable {
         this.ticketDetalles = ticketDetalles;
     }
 
-    public List<FormaPago> getTicketFormasPago() {
-        return ticketFormasPago;
+    public List<TicketPagos> getTicketPagos() {
+         if (ticketPagos == null) {
+            ticketPagos = new ArrayList<TicketPagos>();
+        }
+        return ticketPagos;
     }
 
-    public void setTicketFormasPago(List<FormaPago> ticketFormasPago) {
-        this.ticketFormasPago = ticketFormasPago;
+    public void setTicketPagos(List<TicketPagos> ticketPagos) {
+        this.ticketPagos = ticketPagos;
     }
 
     @Override

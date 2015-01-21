@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+ 
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="bean" type="py.syscvsa.utils.web.BeanGenerico" required="true"/>
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:dialog header="Elija las columnas que desea mostrar" widgetVar="columnas" resizable="false">  
+            <h:form>  
+
+                <p:selectManyCheckbox value="#{cc.attrs.bean.columnasElegidas}"  
+                                      layout="pageDirection">  
+                    <f:selectItems value="#{cc.attrs.bean.itemsColumnas}" />  
+                </p:selectManyCheckbox> 
+
+                <p:commandButton action="#{cc.attrs.bean.guardaColumnas()}" value="Guardar"
+                                 update="@(.resultado)" oncomplete="columnas.hide();"/>
+            </h:form>
+        </p:dialog>
+
+    </cc:implementation>
+</html>

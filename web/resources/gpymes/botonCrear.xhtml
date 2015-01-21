@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+ 
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="action" targets="botonCrear" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:commandLink id="botonCrear" class="btn btn-success link-text-blanco">
+            <i class="icon-ok icon-white link-text-blanco"></i> Crear
+        </h:commandLink>        
+
+    </cc:implementation>
+</html>

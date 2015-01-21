@@ -8,8 +8,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import py.gestion.puntoventa.persisitencia.MetodoPago;
-import py.gestion.puntoventa.web.MetodoPagoBean;
+import py.gestion.contabilidad.persistencia.MetodoPago;
+import py.gestion.contabilidad.web.MetodoPagoBean;
 
 
 /**

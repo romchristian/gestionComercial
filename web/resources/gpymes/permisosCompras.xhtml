@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <table>
+            <tr>
+                <td style="text-align: center; font-weight: bold;" 
+                    valign="middle" height="40" bgcolor="#85B2CB">
+                    COMPRAS
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p:tree value="#{permisosCompras.root}" var="node" 
+                            selectionMode="checkbox"
+                            selection="#{permisosCompras.selectedNodes}">
+
+                        <p:treeNode>
+                            <h:outputText value="#{node}" />
+                        </p:treeNode>
+                    </p:tree>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+    </cc:implementation>
+</html>

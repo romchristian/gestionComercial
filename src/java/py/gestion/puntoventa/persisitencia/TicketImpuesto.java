@@ -6,14 +6,13 @@ package py.gestion.puntoventa.persisitencia;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import py.gestion.adm.persistencia.ImpuestoIVA;
-import py.gestion.puntoventa.persisitencia.Ticket;
+
 
 /**
  *

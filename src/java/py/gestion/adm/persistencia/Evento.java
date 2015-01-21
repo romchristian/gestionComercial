@@ -14,7 +14,7 @@ import py.gestion.seguridad.persistencia.Usuario;
  * @author cromero
  */
 @Entity
-public abstract class Evento implements Serializable {
+public  class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

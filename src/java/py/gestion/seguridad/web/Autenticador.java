@@ -52,7 +52,7 @@ public class Autenticador implements Serializable {
             JsfUtil.addErrorMessage("Fallo el logeo");
             return "error";
         }
-        return "/syscvsa/home.xhtml";
+        return "/gc/home.xhtml";
     }
 
     public String logout() throws IOException {
@@ -62,7 +62,7 @@ public class Autenticador implements Serializable {
             request.getSession(false).invalidate();
             request.logout();
             String projectPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-            FacesContext.getCurrentInstance().getExternalContext().redirect(projectPath+"/syscvsa/login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(projectPath+"/gc/login.xhtml");
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage("Logout failed."));
         }

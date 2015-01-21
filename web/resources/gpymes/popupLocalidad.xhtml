@@ -1,0 +1,75 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+        <p:outputPanel  styleClass="panelLocalidad">
+
+            <table>
+                <tr>
+                    <td valign="middle">
+                        <h:inputText value="#{diccionarioLocalidad.elegida.nombre}" style="font-weight: bold;width: 300px; background-color: orange; border:1px solid darkorange"
+                                     readonly="true"/>
+                    </td>
+                    <td valign="middle">
+                        <h:commandButton value="Elegir Localidad" onclick="dialogLocalidad.show()" image="/imagenes/search.png"
+                                         />
+                    </td>
+                </tr>
+            </table>
+
+
+
+
+        </p:outputPanel>
+
+        <p:dialog header="Elección de Localidad" widgetVar="dialogLocalidad" resizable="false" draggable="false"  
+                  width="600" showEffect="fade" hideEffect="explode" modal="true"
+                  closable="false">  
+
+            <p:dataTable id="localidades" var="l" value="#{diccionarioLocalidad.lista}"
+                         rows="10" paginator="true">  
+
+
+                <p:column headerText="Departamento" filterBy="#{l.distrito.departamento.nombre}"
+                          filterMatchMode="contains">  
+                    #{l.distrito.departamento.nombre}  
+                </p:column>  
+
+                <p:column headerText="Distrito/Ciudad " filterBy="#{l.distrito.nombre}"
+                          filterMatchMode="contains">  
+                    #{l.distrito.nombre}  
+                </p:column>  
+
+
+                <p:column headerText="Localidad/Barrio" filterBy="#{l.nombre}"
+                          filterMatchMode="contains">  
+                    <p:commandLink value="#{l.nombre}" actionListener="#{diccionarioLocalidad.onRowDblselect(l)}"
+                                   update="@(.panelLocalidad)"
+                                   oncomplete="dialogLocalidad.hide()"/>
+
+                </p:column>  
+
+            </p:dataTable>
+
+            <p:commandButton  value="Cancela" actionListener="#{diccionarioLocalidad.limpia()}"
+                              oncomplete="dialogLocalidad.hide()"/>
+
+        </p:dialog>   
+
+
+
+
+    </cc:implementation>
+</html>

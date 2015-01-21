@@ -6,6 +6,7 @@ package py.gestion.puntoventa.persisitencia;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +17,14 @@ import py.gestion.adm.persistencia.ImpuestoIVA;
 import py.gestion.adm.persistencia.Moneda;
 import py.gestion.stock.persistencia.Producto;
 
+
 /**
  *
  * @author emelgarejo
  */
 @Entity
 public class TicketDetalle implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,6 +39,8 @@ public class TicketDetalle implements Serializable {
     private Producto producto;
     private BigDecimal cantidad;
     private BigDecimal precioUnitario;
+    private BigDecimal precioUnitarioNeto;//
+    private BigDecimal porcentajeDescuento =new BigDecimal(BigInteger.ZERO);
     @ManyToOne
     private ImpuestoIVA impuestoIVALinea;
     private BigDecimal totalIVA;
@@ -54,8 +59,8 @@ public class TicketDetalle implements Serializable {
         this.impuestoIVALinea = impuestoIVALinea;
         this.moneda = moneda;
         this.total = cantidad.multiply(precioUnitario);
-        double factorIVA = impuestoIVALinea.getValor()+1;
-        BigDecimal precioSinIva = total.divide(new BigDecimal(factorIVA),0, RoundingMode.HALF_EVEN);
+        double factorIVA = impuestoIVALinea.getValor() + 1;
+        BigDecimal precioSinIva = total.divide(new BigDecimal(factorIVA), 0, RoundingMode.HALF_EVEN);
         this.totalIVA = total.subtract(precioSinIva);
     }
 
@@ -75,7 +80,6 @@ public class TicketDetalle implements Serializable {
         this.moneda = moneda;
     }
 
-    
     public Ticket getTicket() {
         return ticket;
     }
@@ -141,15 +145,33 @@ public class TicketDetalle implements Serializable {
     }
 
     public BigDecimal getTotal() {
-        total = cantidad.multiply(precioUnitario);
+        if (porcentajeDescuento.doubleValue() > 0) {
+            total = cantidad.multiply(precioUnitarioNeto);
+        } else {
+            total = cantidad.multiply(precioUnitario);
+        }
         return total;
     }
 
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
-    
-    
+
+    public BigDecimal getPrecioUnitarioNeto() {
+        return precioUnitarioNeto;
+    }
+
+    public void setPrecioUnitarioNeto(BigDecimal precioUnitarioNeto) {
+        this.precioUnitarioNeto = precioUnitarioNeto;
+    }
+
+    public BigDecimal getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(BigDecimal porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
 
     @Override
     public int hashCode() {
@@ -175,5 +197,5 @@ public class TicketDetalle implements Serializable {
     public String toString() {
         return "py.syscvsa.puntoventa.persisitencia.TicketDetalle[ id=" + id + " ]";
     }
-    
+
 }

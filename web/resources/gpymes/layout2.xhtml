@@ -1,0 +1,125 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+
+        <cc:facet name="operaciones"/>
+        <cc:facet name="filtros"/>
+        <cc:facet name="centro"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <style>
+
+            .button { padding: .5em 1em; text-decoration: none; 
+                      -webkit-transform: rotate(-90deg)!important;
+                      /* Firefox */
+                      -moz-transform: rotate(-90deg);
+                      /* IE */
+                      -ms-transform: rotate(-90deg);
+                      /* Opera */
+                      -o-transform: rotate(-90deg);
+                      /* Internet Explorer */
+                      filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+            }
+            .menu { width:300px;min-height:750px;  padding: 0.4em; position: relative; display: inline-block;float: left;}
+            .menu h3 { margin: 0; padding: 0.4em; text-align: center; }
+            .ui-accordion .ui-accordion-header a {
+                display: block;
+                font-size: 10pt;
+                padding: 0.5em 0.5em 0.5em 2.2em;
+                text-align: left;
+            }
+
+        </style>
+
+        <script type="text/javascript">
+            $ = jQuery;
+
+            var abiertoFiltro = false;
+            var abiertoConsultas = false;
+            
+            $(document).ready(function() {
+
+                $("#menuFiltros").hide();
+                $("#menuConsultas").hide();
+                $("#areaFiltro").hide();
+                $("#toggleFiltro").click(function() {
+                    if (abiertoFiltro) {
+                        $("#areaFiltro").hide("slow");
+                        $("#menuFiltros").hide("slow", function() {
+                            $("#sideMenu").attr("class", "");
+                            $("#center").attr("class", "span12");
+                            abiertoFiltro = false;
+                        });
+                    } else {
+                        $("#menuConsultas").hide();
+                        $("#sideMenu").attr("class", "span3");
+                        $("#center").attr("class", "span9");
+                        $("#menuFiltros").show("slow");
+                        $("#areaFiltro").show("slow");
+                        abiertoFiltro = true;
+                        abiertoConsultas = false;
+                    }
+                });
+                
+                
+                $("#toggleConsultas").click(function() {
+                    if (abiertoConsultas) { 
+                        $("#menuConsultas").hide("slow", function() {
+                          
+                            $("#sideMenu").attr("class", "");
+                            $("#center").attr("class", "span12");
+                            abiertoConsultas = false;
+                        });
+                    } else {
+                        $("#menuFiltros").hide();
+                        $("#areaFiltro").hide();
+                        $("#sideMenu").attr("class", "span3");
+                        $("#center").attr("class", "span9");
+                        $("#menuConsultas").show("slow");
+                        abiertoConsultas = true;
+                        abiertoFiltro = false;
+                    }
+                });
+            });
+
+        </script>
+
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+
+                <div class="" id="sideMenu" style="margin: 0px;padding: 0px; float: left">
+                    <div id="menuFiltros">
+                        <div id="filtros" >
+                            <p:panel header="Filtros">
+                                <cc:renderFacet name="filtros"/>
+                            </p:panel>
+                        </div>
+                    </div>
+                    <div id="menuConsultas">
+                        <div id="operaciones">
+                            <p:panel header="Consultas">
+                                <cc:renderFacet name="operaciones"/>
+                            </p:panel>
+                        </div>
+                    </div>
+                </div>
+                <div class="span12" id="center" style="float: right">
+                    <div id="resultado" style="z-index: -1">
+                        <cc:renderFacet name="centro"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </cc:implementation>
+</html>

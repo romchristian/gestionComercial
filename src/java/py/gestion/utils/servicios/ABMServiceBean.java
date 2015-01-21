@@ -27,7 +27,7 @@ import javax.persistence.Query;
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class ABMServiceBean implements ABMService {
 
-    @PersistenceContext(unitName = "SYSCVSAPU")
+    @PersistenceContext(unitName = "GestionComercialPU")
     EntityManager em;
 
     @Override

@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="bean" type="py.syscvsa.utils.web.BeanGenerico" required="true"/>
+        <cc:attribute name="elegido" required="true"/>
+        <cc:attribute name="convertidorId" required="true"/>
+        <cc:attribute name="id" />
+        <cc:attribute name="disabled"/>
+        <cc:attribute name="required"/>
+        <cc:attribute method-signature="void actionListener(org.primefaces.event.SelectEvent)" name="listener"/>
+        <cc:attribute name="update"/>
+        <cc:attribute name="updateOnBlur"/>
+         
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        
+        <p:autoComplete value="#{cc.attrs.elegido}"  id="#{cc.attrs.id}" required="#{cc.attrs.required}"
+                        completeMethod="#{cc.attrs.bean.completar}" disabled="#{cc.attrs.disabled}"
+                        forceSelection="true"  var="obj" itemValue="#{obj}" itemLabel="#{obj.toString()}">
+            <f:converter converterId="#{cc.attrs.convertidorId}" />
+            
+            <f:selectItem itemValue="" itemLabel="Crear Nuevo"/>
+            
+            <c:if test="#{cc.getValueExpression('listener') != null}">
+                <p:ajax event="itemSelect" update="#{cc.attrs.update}" listener="#{cc.attrs.listener}"/>
+            </c:if>
+            
+                <p:ajax event="blur" update="#{cc.attrs.updateOnBlur}" process="#{cc.attrs.updateOnBlur}"/>
+            
+        </p:autoComplete>
+        
+    </cc:implementation>
+</html>

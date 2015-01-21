@@ -9,7 +9,7 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import py.gestion.adm.persistencia.Persona;
-import py.gestion.clientes.persistencia.enums.TipoDocumento;
+import py.gestion.adm.persistencia.enums.TipoDocumento;
 import py.gestion.seguridad.web.Encryptador;
 
 /**

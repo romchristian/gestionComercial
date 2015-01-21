@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="action" targets="botonNuevo" required="true"/>
+        <cc:attribute name="rendered"/>
+        <cc:attribute name="style"/>
+    </cc:interface>
+ 
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:commandLink id="botonNuevo" class="btn btn-success link-text-blanco" rendered="#{cc.attrs.rendered}" style="#{cc.attrs.style}">
+            <i class="icon-white link-text-blanco"></i> Nuevo
+        </h:commandLink>        
+
+    </cc:implementation>
+</html>

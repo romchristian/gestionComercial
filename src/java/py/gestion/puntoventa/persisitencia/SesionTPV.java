@@ -21,6 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import py.gestion.seguridad.persistencia.Usuario;
 
+
 /**
  *
  * @author Acer

@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import py.gestion.auditoria.persistencia.Auditoria;
-import py.gestion.seguridad.persistencia.Usuario;
+
 
 /**
  *

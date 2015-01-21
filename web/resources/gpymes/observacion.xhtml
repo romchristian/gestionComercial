@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="usuario" type="java.lang.String"/>
+        <cc:attribute name="fecha" type="java.util.Date"/>
+        <cc:attribute name="observacion" type="java.lang.String"/>
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:panelGroup>
+            <div style="background-color:#D7DF01;padding: 5px;border: 1px solid #AEB404">
+                <table width="100%">
+                    <tr>
+                        <td style="font-weight: bold; font-size: 8pt" width="200">
+                            #{cc.attrs.usuario}
+                        </td>
+                        <td width="80%">
+
+                        </td>
+                        <td style="font-weight: bold;font-size: 8pt">
+                            <h:outputText value="#{cc.attrs.fecha}">
+                                <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                            </h:outputText>
+                        </td>
+                    </tr>
+                </table>
+                <hr style="background-color:#D7DF01; border-color: yellow "></hr>
+                <div style="padding: 5px">
+                    <h:outputText value="#{cc.attrs.observacion}" escape="false"/>
+                </div>
+            </div>
+            <p:spacer height="5"></p:spacer>
+        </h:panelGroup>
+
+
+    </cc:implementation>
+</html>

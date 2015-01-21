@@ -13,7 +13,7 @@ import javax.persistence.Entity;
  * @author emelgarejo
  */
 @Entity
-public class FormaPagoEfectivo extends FormaPago {
+public class FormaPagoEfectivo extends TicketPagos {
     
     
 }

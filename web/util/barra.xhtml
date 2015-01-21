@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:notificationBar position="top" effect="slide" widgetVar="topBar" style="z-index: 1000;opacity:0.95;background-color: black;height: 100px">
+        <div class="row-fluid">
+            <span class="span4" onclick="topBar.hide();" style="height: 70px;text-align: left; font-size: 12pt; font-weight: bolder;color: #bbbbbb;">
+                GESTION PYMES - #{credencial.empresa.razonSocial} - #{credencial.sucursal.nombre}
+                <p:separator></p:separator>
+                <div class="row-fluid">
+                    <span class="span6">
+                        <h:panelGrid columns="2" style="font-size: 10pt;color: white">
+                            <h:outputText value="Usuario:"/>
+                            <h:outputText value="#{credencial.usuario.nombre} #{credencial.usuario.apellido}"/>
+                        </h:panelGrid>
+                    </span>
+                    <span class="span6">
+                        <div>
+                            <table style="font-size: 10pt;color: white" cellspacing="5" cellpadding="2" class="">
+                                <tr>
+                                    <td colspan="2">
+                                        <h:outputText value="Cotización"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="Compra"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="Venta"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:graphicImage value="/imagenes/dolar.jpg"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="Dólar"/>
+                                    </td>
+                                    <td>
+<!--                                        <h:outputText value="#{servicioCotizacion.cotizacionDolar.compra}">
+                                            <f:convertNumber locale="#{formato.locale}"/>
+                                        </h:outputText>-->
+                                    </td>
+                                    <td>
+<!--                                        <h:outputText value="#{servicioCotizacion.cotizacionDolar.venta}">
+                                            <f:convertNumber locale="#{formato.locale}"/>
+                                        </h:outputText>-->
+                                    </td>
+                                </tr>
+                            </table>    
+
+                        </div>
+                    </span>
+                </div>
+            </span>
+            <span class="span8" style="text-align: center; font-size: 11pt; font-weight: bolder;color: #444444; padding-right: 10px">
+<!--                <ui:include src="/util/menuIntegracion.xhtml"/>-->
+                <ui:include src="/util/menu.xhtml"/>
+            </span>
+        </div>
+    </p:notificationBar>
+
+</ui:composition>

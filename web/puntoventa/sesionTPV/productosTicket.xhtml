@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <div >
+
+        <table>
+            <tr>
+                <td width="80%">
+                    <div style="width: 70%; margin: 0 auto 0 auto; padding: 15px">
+                        <p:inputText style="width: 100%" value="#{terminalBean.codigoActual}"/>
+                    </div>   
+                </td>
+                <td>
+                    <div style="width: 70%; margin: 0 auto 0 auto; padding: 15px">
+                        <p:commandButton value="Buscar" action="#{terminalBean.buscar()}" update="@(.detalles)"
+                                         oncomplete="scrollToBottom()"/>
+                    </div>   
+                </td>
+
+            </tr>
+        </table>
+
+
+        <p:separator style="margin: 0px; padding: 0px"/>
+
+        <p:dataGrid columns="5" value="#{productoBean.findAll()}" var="p" style="background: none!important; background-color: #ddd">
+
+            <p:commandLink action="#{terminalBean.buscar()}" update="@(.detalles)" oncomplete="scrollToBottom();">
+                <div style="width: 100%;display:inline-table">
+                    <div class="raised" style="margin:15px;float: left;
+                         vertical-align: middle; text-align: center;-webkit-border-radius: 10px;
+                         -moz-border-radius: 10px;
+                         border-radius: 10px;
+                         height: 140px;
+                         width: 125px;">
+                        <div style="height: 20px;
+                             color: white;
+                             font-weight: bold;
+                             background-color: #0077b3;
+                             float: right;
+                             -webkit-border-radius: 4px;
+                             -moz-border-radius: 4px;
+                             border-radius: 4px;">
+
+                            G <h:outputText value="#{p.precioVenta}">
+                                <f:convertNumber locale="#{formato.locale}"/>
+                            </h:outputText>
+
+
+
+                        </div>
+                        <p:graphicImage url="#{resource['img/pulp.png']}" width="120" height="100" style="position: relative;float: inside"/>
+                        <div style="font-size: 10pt;
+                             margin-left: 5px;
+                             color:#0077b3;
+                             position: relative;
+                             z-index: 2000;
+                             float: bottom;">
+                            #{p.nombre}
+                        </div>
+                    </div>
+                </div>
+                <f:setPropertyActionListener value="#{p.codigo}" target="#{terminalBean.codigoActual}" />
+            </p:commandLink>
+
+        </p:dataGrid>
+
+    </div>
+
+</ui:composition>

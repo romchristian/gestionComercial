@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:decorate template="/puntoventa/plantillaListado.xhtml">
+
+        <ui:define name="titulo">
+            Secuencia
+        </ui:define>
+
+        <ui:define name="acciones">
+            <p:commandButton action="#{secuenciaBean.preparaCreacion()}" 
+                             value="Nuevo"
+                             rendered="#{autorizador.hayPermisoAccion('CreaOrdenCompra')}"
+                             styleClass="botonVerde flotaIzquierda"/>
+        </ui:define>
+
+        <ui:define name="tabla">
+            <p:dataTable value="#{secuenciaBean.findAll()}" var="m" styleClass="resultado" rendered="#{not empty secuenciaBean.findAll()}">
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{m.nombre}"/>
+                </p:column>
+                
+                <p:column headerText="Acciones">
+                    <h:commandButton action="#{secuenciaBean.preparaEdicion(m)}" value="Editar" rendered="#{autorizador.hayPermisoAccion('EditaOrdenCompra')}"/>
+                </p:column>
+            </p:dataTable>
+        </ui:define>
+    </ui:decorate>
+</ui:composition>
