@@ -6,8 +6,8 @@ package py.gestion.puntoventa.web;
 
 
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import py.gestion.puntoventa.persisitencia.Secuencia;
 import py.gestion.puntoventa.servicio.SecuenciaDAO;
 import py.gestion.utils.web.BeanGenerico;
@@ -17,8 +17,8 @@ import py.gestion.utils.servicios.AbstractDAO;
  *
  * @author christian
  */
-@ManagedBean
-@RequestScoped
+@Named
+@ViewScoped
 public class SecuenciaBean extends BeanGenerico<Secuencia>{
 
     @EJB private SecuenciaDAO ejb;

@@ -13,6 +13,7 @@ import py.gestion.adm.persistencia.TipoCosto;
 import py.gestion.adm.persistencia.TipoPersona;
 import py.gestion.contabilidad.persistencia.TipoDiario;
 import py.gestion.puntoventa.persisitencia.TipoMetodoPago;
+import py.gestion.puntoventa.persisitencia.TipoSecuencia;
 
 import py.gestion.stock.persistencia.TipoAtributoProducto;
 
@@ -49,6 +50,17 @@ public class ProductorEnums implements Serializable {
         TipoDiario[] lista = TipoDiario.values();
         for (int i = 0; i < lista.length; i++) {
             TipoDiario tp = lista[i];
+            R[i] = new SelectItem(tp, tp.toString());
+        }
+        return R;
+    }
+    
+    
+    public SelectItem[] obtTiposSecuencias() {
+        SelectItem[] R = new SelectItem[TipoSecuencia.values().length];
+        TipoSecuencia[] lista = TipoSecuencia.values();
+        for (int i = 0; i < lista.length; i++) {
+            TipoSecuencia tp = lista[i];
             R[i] = new SelectItem(tp, tp.toString());
         }
         return R;

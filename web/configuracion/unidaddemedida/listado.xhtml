@@ -3,36 +3,42 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
+                
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <f:metadata>
-        <f:viewAction action="#{diarioTreeBean.cargaDatos()}"/>
-    </f:metadata>
+
+
 
     <ui:decorate template="/util/plantillaListado.xhtml">
-        <ui:param name="modulo" value="contabilidad"/>
-        <ui:param name="titulo" value="Diarios"/>
+        <ui:param name="modulo" value="configuracion"/>
+        <ui:param name="titulo" value="Unidades de Medida"/>
 
 
         <ui:define name="acciones">
-            <p:commandButton action="#{diarioBean.preparaCreacion()}" 
+            <p:commandButton action="#{unidadMedidaBean.preparaCreacion()}" 
                              value="Nuevo"
                              rendered="#{autorizador.hayPermisoAccion('CreaOrdenCompra')}"
                              styleClass="botonVerde flotaIzquierda"/>
         </ui:define>
 
         <ui:define name="tabla">
-            <p:treeTable value="#{diarioTreeBean.rootNode}" var="d">
-                <p:column headerText="Nombre">
-                    <h:link value="#{d.descripcion}" outcome="edita">
-                        <f:param name="id" value="#{d.id}"/>
+            <p:dataTable value="#{unidadMedidaBean.findAll()}" var="u">
+                
+                <p:column filterMatchMode="contains" filterBy="#{u.nombre}" headerText="Nombre">
+                    <h:link value="#{u.nombre}" outcome="edita">
+                        <f:param name="id" value="#{u.id}"/>
                     </h:link>
                 </p:column>
-                <p:column headerText="Tipo">
-                    <h:outputText value="#{d.tipo}" />
+                
+                <p:column filterMatchMode="exact" filterOptions="#{productorEnums.obtEstados()}"
+                          filterBy="#{u.estado}" headerText="Estado">
+                    <h:outputText value="#{u.estado}"/>
                 </p:column>
-            </p:treeTable>
+
+            </p:dataTable> 
+
         </ui:define>
+        
     </ui:decorate>
+
 </ui:composition>

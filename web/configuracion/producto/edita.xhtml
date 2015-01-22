@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{productoBean.id}"/>
+        <f:viewAction action="#{productoBean.cargaDatos()}"/>
+    </f:metadata>
+
+    <ui:decorate template="/util/plantillaABM.xhtml">
+        <ui:param name="modulo" value="configuracion"/>
+        <ui:param name="titulo" value="Edita #{productoBean.actual.nombre}"/>
+        <ui:param name="listado" value="Productos"/>
+        <ui:param name="enctype" value="multipart/form-data"/>
+
+        <ui:define name="acciones">
+            <p:commandButton value="Guardar" action="#{productoBean.edit}"  styleClass="botonRojo flotaIzquierda" update="mensajes, panelControles"/>
+        </ui:define>
+
+        <ui:define name="col1">
+
+            <h:panelGrid columns="1">
+
+
+                <p:inputText id="nombre" value="#{productoBean.actual.nombre}" styleClass="descripcionPrincipal"/>
+                <p:watermark for="nombre" value="Nombre" id="watermark"/>
+
+
+                <h:panelGrid columns="2">
+
+                    <p:outputLabel value="Código" for="codigo"/>
+                    <p:inputText value="#{productoBean.actual.codigo}" id="codigo" required="true"/>  
+
+                    <p:outputLabel value="Unidad Medida" for="unidadMedida"/>
+                    <p:selectOneMenu value="#{productoBean.actual.unidadMedida}" id="unidadMedida" required="true">
+                        <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Costo" for="costo"/>
+                    <p:inputText value="#{productoBean.actual.costo}" id="costo"/> 
+
+                    <p:outputLabel value="Precio Venta" for="precio"/>
+                    <p:inputText value="#{productoBean.actual.precioVenta}" id="precio"/>
+
+                </h:panelGrid>
+            </h:panelGrid>
+
+        </ui:define>
+
+        <ui:define name="col2">
+            <h:panelGroup>
+                <h:panelGrid columns="2">
+
+                    <p:selectBooleanCheckbox value="#{productoBean.actual.generarCodigo}"/>
+                    <h:outputText value="¿Generar código?"/>
+
+                    <p:selectBooleanCheckbox value="#{productoBean.actual.costoCalculado}"/>
+                    <h:outputText value="¿Costo Calculado?"/>
+
+                    <p:selectBooleanCheckbox value="#{productoBean.actual.inventariable}"/>
+                    <h:outputText value="¿Inventariable?"/>
+                </h:panelGrid>
+                <br/>
+
+
+
+                <div class="raised" style="height: 100px; width: 150px; text-align: center;vertical-align: middle">
+                    <p:graphicImage value="#{productoBean.obtImageStreamed()}" style="max-width: 100%;max-height: 100%;vertical-align: middle"/>
+                </div>
+                <br></br>
+                <p:fileUpload value="#{productoBean.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" immediate="true"/> 
+                <p:commandButton value="Subir" ajax="false"
+                                 actionListener="#{productoBean.upload()}">
+                </p:commandButton>
+
+
+            </h:panelGroup>
+
+        </ui:define>
+
+        <ui:define name="detalles">
+
+            <p:panel header="Familias a las que pertenece">
+                <gp:detFamilias lblFamilia="Familia"
+                                lblRemover="Quitar"
+                                toggleable="true"/>
+            </p:panel>
+
+        </ui:define>
+    </ui:decorate>
+</ui:composition>

@@ -14,27 +14,43 @@
         <ui:param name="listado" value="Secuencias"/> 
 
         <ui:define name="acciones">
-            <p:commandButton value="Guardar" action="#{secuenciaBean.edit}"  styleClass="botonRojo flotaIzquierda"/>
+            <p:commandButton value="Guardar" action="#{secuenciaBean.edit}"  styleClass="botonRojo flotaIzquierda" update="mensajes, panelControles"/>
         </ui:define>
-
-
 
         <ui:define name="col1">
-            <p:inputText id="nombre" value="#{secuenciaBean.actual.nombre}" styleClass="descripcionPrincipal"/>
+            <p:inputText id="nombre" value="#{secuenciaBean.actual.nombre}" styleClass="descripcionPrincipal" required="true"/>
             <p:watermark for="nombre" value="Nombre" id="watermark"/>
             <br/>
-            <br/>
             <h:panelGrid columns="2" cellpadding="10">
-
-                <p:outputLabel value="Valor Inicial" for="inicio"/>
-                <p:inputText value="#{secuenciaBean.actual.valorInicial}" id="inicio"/>
-                <p:outputLabel value="Valor Máximo" for="maximo"/>
-                <p:inputText value="#{secuenciaBean.actual.valorFinal}" id="maximo"/>
+                <p:outputLabel value="Tipo" for="tipo"/>
+                <h:selectOneMenu value="#{secuenciaBean.actual.tipoSecuencia}" id="tipo">
+                    <p:ajax update="@(.panelControles)"/>
+                    <f:selectItems value="#{productorEnums.obtTiposSecuencias()}"/>
+                </h:selectOneMenu>
             </h:panelGrid>
+            
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Timbrado" for="timbrado" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"/>
+                    <p:inputText value="#{secuenciaBean.actual.timbrado}" id="timbrado" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"/>
+                    <p:outputLabel value="Establecimiento" for="est" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"/>
+                    <p:inputText value="#{secuenciaBean.actual.establecimiento}" id="est" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"/>
+                    <p:outputLabel value="Punto Expedicion" for="pex" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"/>
+                    <p:inputText value="#{secuenciaBean.actual.puntoExpedicion}" id="pex" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"/>
+                    <p:outputLabel value="Vencimiento" for="venc" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"/>
+                    <p:calendar value="#{secuenciaBean.actual.vencimiento}" id="venc" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"
+                                pattern="#{formato.patronFecha}" locale="es" lang="es"/>
 
+                    
+                    <p:outputLabel value="Valor Inicial" for="inicio"/>
+                    <p:inputText value="#{secuenciaBean.actual.valorInicial}" id="inicio"/>
+                    <p:outputLabel value="Valor Máximo" for="maximo" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"/>
+                    <p:inputText value="#{secuenciaBean.actual.valorFinal}" id="maximo" rendered="#{secuenciaBean.actual.tipoSecuencia == 'FACTURA'}"/>
+                </h:panelGrid>
+            
         </ui:define>
+        
         <ui:define name="col2">
-
+        
         </ui:define>
 
         <ui:define name="detalles">

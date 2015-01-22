@@ -7,15 +7,20 @@
 
                 xmlns:f="http://java.sun.com/jsf/core">
 
+    <f:metadata>
+        <f:viewParam name="id" value="#{metodoPagoBean.id}"/>
+        <f:viewAction action="#{metodoPagoBean.cargaDatos()}"/>
+    </f:metadata>
 
     <ui:decorate template="/util/plantillaABM.xhtml">
-        <ui:param name="modulo" value="contabilidad"/>
-        <ui:param name="titulo" value="Nuevo"/>
+        <ui:param name="modulo" value="configuracion"/>
+        <ui:param name="titulo" value=" Edita #{metodoPagoBean.actual.nombre}"/>
         <ui:param name="listado" value="Metodos de Pagos"/>
 
         <ui:define name="acciones">
-            <p:commandButton value="Guardar" action="#{metodoPagoBean.edit}"  styleClass="botonRojo flotaIzquierda"/>
+            <p:commandButton value="Guardar" action="#{metodoPagoBean.edit}"  styleClass="botonRojo flotaIzquierda" update="mensajes, panelControles"/>
         </ui:define>
+
 
 
 
@@ -77,5 +82,6 @@
 
         </ui:define>
     </ui:decorate>
+
 
 </ui:composition>

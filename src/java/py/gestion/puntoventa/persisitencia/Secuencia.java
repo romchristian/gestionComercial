@@ -28,8 +28,8 @@ public class Secuencia implements Serializable {
     private Long id;
     private String nombre;
     private String timbrado;
-    private String codEstablecimiento;
-    private String codSucursal;
+    private String establecimiento;
+    private String puntoExpedicion;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date vencimiento;
     private Long valorInicial;
@@ -38,7 +38,13 @@ public class Secuencia implements Serializable {
     private Estado estado;
     @Enumerated(EnumType.STRING)
     private TipoSecuencia tipoSecuencia;
-    private boolean infinito;
+    private Long ultimoNumero;
+
+    public Secuencia() {
+        this.estado = Estado.ACTIVO;
+        this.valorFinal = valorFinal == null? 0L:valorFinal;
+        ultimoNumero = 0L;
+    }
 
     public Long getId() {
         return id;
@@ -80,20 +86,20 @@ public class Secuencia implements Serializable {
         this.timbrado = timbrado;
     }
 
-    public String getCodEstablecimiento() {
-        return codEstablecimiento;
+    public String getEstablecimiento() {
+        return establecimiento;
     }
 
-    public void setCodEstablecimiento(String codEstablecimiento) {
-        this.codEstablecimiento = codEstablecimiento;
+    public void setEstablecimiento(String establecimiento) {
+        this.establecimiento = establecimiento;
     }
 
-    public String getCodSucursal() {
-        return codSucursal;
+    public String getPuntoExpedicion() {
+        return puntoExpedicion;
     }
 
-    public void setCodSucursal(String codSucursal) {
-        this.codSucursal = codSucursal;
+    public void setPuntoExpedicion(String puntoExpedicion) {
+        this.puntoExpedicion = puntoExpedicion;
     }
 
     public Date getVencimiento() {
@@ -104,12 +110,30 @@ public class Secuencia implements Serializable {
         this.vencimiento = vencimiento;
     }
 
+    public Long obtSiguienteNumero() {
+        if (valorFinal > 0 && valorFinal > (ultimoNumero + 1)) {
+            return null;
+        }
+        return ultimoNumero + 1;
+    }
+
     public Estado getEstado() {
+        if (vencimiento != null && (vencimiento.before(new Date()))) {
+            estado = Estado.INACTIVO;
+        } else if (valorFinal > 0 && obtSiguienteNumero() == null) {
+            estado = Estado.INACTIVO;
+        }
         return estado;
     }
 
     public void setEstado(Estado estado) {
-        this.estado = estado;
+        if (vencimiento != null && (vencimiento.before(new Date()))) {
+            this.estado = Estado.INACTIVO;
+        } else if (valorFinal > 0 && obtSiguienteNumero() == null) {
+            this.estado = Estado.INACTIVO;
+        } else {
+            this.estado = estado;
+        }
     }
 
     public TipoSecuencia getTipoSecuencia() {
@@ -120,15 +144,13 @@ public class Secuencia implements Serializable {
         this.tipoSecuencia = tipoSecuencia;
     }
 
-    public boolean isInfinito() {
-        return infinito;
+    public Long getUltimoNumero() {
+        return ultimoNumero;
     }
 
-    public void setInfinito(boolean infinito) {
-        this.infinito = infinito;
+    public void setUltimoNumero(Long ultimoNumero) {
+        this.ultimoNumero = ultimoNumero;
     }
-    
-    
 
     @Override
     public int hashCode() {

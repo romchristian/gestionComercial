@@ -6,28 +6,29 @@
                 xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:decorate template="/util/plantillaABM.xhtml">
-        <ui:param name="modulo" value="contabilidad"/>
+        <ui:param name="modulo" value="configuracion"/>
         <ui:param name="titulo" value="Nuevo"/>
-        <ui:param name="listado" value="Diarios"/>
+        <ui:param name="listado" value="Familias"/>
         
         <ui:define name="acciones">
-            <p:commandButton value="Guardar" action="#{diarioBean.edit}"  styleClass="botonRojo flotaIzquierda" />
+            <p:commandButton value="Guardar" action="#{familiaBean.edit}"  styleClass="botonRojo flotaIzquierda" update="mensajes, panelControles"/>
         </ui:define>
         
         <ui:define name="col1">
             <h:panelGroup>
                 <h:panelGrid columns="1">
-                    <p:inputText id="nombre" value="#{diarioBean.actual.descripcion}" styleClass="descripcionPrincipal"/>
+                    <p:inputText id="nombre" value="#{familiaBean.actual.nombre}" styleClass="descripcionPrincipal"/>
                     <p:watermark for="nombre" value="Nombre" id="watermark"/>
                     <h:panelGrid columns="2">
+                        
                         <h:outputText value="Padre"/>
-                        <h:selectOneMenu value="#{diarioBean.actual.padre}">
-                            <f:selectItems value="#{diarioBean.itemsAvailableSelectOne}"/>
+                        <h:selectOneMenu value="#{familiaBean.actual.padre}">
+                            <f:selectItems value="#{familiaBean.itemsAvailableSelectOne}"/>
                         </h:selectOneMenu>
-                        <h:outputText value="Tipo"/>
-                        <h:selectOneMenu value="#{diarioBean.actual.tipo}">
-                            <f:selectItems value="#{productorEnums.obtTiposDiario()}"/>
-                        </h:selectOneMenu>
+                        
+                         <h:outputText value="Codigo"/>
+                         <h:inputText value="#{familiaBean.actual.cod}"/>
+ 
                     </h:panelGrid>
                 </h:panelGrid>
             </h:panelGroup>

@@ -54,4 +54,12 @@ public class FamiliaDAO extends AbstractDAO<Familia> {
     public List<Familia> findAll(String query, QueryParameter params) {
         return abmService.findByQuery(query, params.parameters());
     }
+    
+    public List<Familia> findAllRoots() {
+        return abmService.getEM().createQuery("SELECT f from Familia f where f.padre IS NULL").getResultList();
+    }
+    
+    public List<Familia> findAllChildren(Familia f) {
+        return abmService.getEM().createQuery("SELECT f from Familia f where f.padre = :padre").setParameter("padre", f).getResultList();
+    }
 }

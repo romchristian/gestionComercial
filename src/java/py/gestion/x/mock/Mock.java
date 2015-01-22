@@ -54,6 +54,7 @@ import py.gestion.puntoventa.persisitencia.SesionTPV;
 import py.gestion.puntoventa.persisitencia.TipoMetodoPago;
 import py.gestion.contabilidad.servicio.DiarioDAO;
 import py.gestion.contabilidad.servicio.MetodoPagoDAO;
+import py.gestion.puntoventa.persisitencia.TipoSecuencia;
 import py.gestion.puntoventa.servicio.PuntoVentaDAO;
 import py.gestion.puntoventa.servicio.SecuenciaDAO;
 import py.gestion.puntoventa.servicio.SesionTPVDAO;
@@ -203,9 +204,10 @@ public class Mock implements Serializable {
         metodoPagoDAO.create(mp);
 
         Secuencia s = new Secuencia();
+        s.setTipoSecuencia(TipoSecuencia.TICKET);
         s.setNombre("Ticket");
         s.setValorInicial(1L);
-        s.setValorFinal(100L);
+        
         secuenciaDAO.create(s);
 
         PuntoVenta pv = new PuntoVenta();

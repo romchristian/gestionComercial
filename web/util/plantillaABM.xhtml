@@ -6,16 +6,18 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:gp="http://java.sun.com/jsf/composite/gpymes">
 
-    
-    
+
+
     <ui:decorate template="/util/plantillaModulo.xhtml">
         <ui:param name="modulo" value="#{modulo}"/>
+
         <ui:define name="menuLateral">
             <ui:include src="/util/menus/#{modulo}.xhtml"/>
         </ui:define>
-        
+
         <ui:define name="cuerpo">
-            <h:form>
+            <h:form enctype="#{enctype}">
+                <p:growl id="mensajes"/>
                 <div style="height: 80px;width: 98%; background-color: #eee">
                     <div class="breadCrumbHolder module">
                         <div id="breadCrumb0" class="breadCrumb module">
@@ -25,7 +27,7 @@
 
                                 </li>
                                 <li>                                    
-                                       #{titulo}
+                                    #{titulo}
                                 </li>
                             </ul>
                         </div>
@@ -35,31 +37,33 @@
                 <div style="height: 30px;width: 100%; background-color: #ddd">
                     <ui:insert name="estados"/>
                 </div>
+
                 <div style="padding: 20px">
                     <div style="padding: 20px;width: 80%; margin: 0 auto 0 auto;height: 80%" class="raised">
-                        <table width="100%" cellspacing="20" cellpadding="20">
-                            <tr>
-                                <td width="50%" valign="top">
-                                    <div>
-                                        <ui:insert name="col1"/>
-                                    </div>
-                                </td>
-                                <td width="50%" valign="top">
-                                    <div>
-                                        <ui:insert name="col2"/>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" valign="top">
-                                    <div>
-                                        <ui:insert name="detalles"/>
-                                    </div>
-                                </td>
-                            </tr>
+                        <p:panel id="panelControles" styleClass="panelControles" style="margin: 0; padding: 0; background: none; border: none">
+                            <table width="100%" cellspacing="20" cellpadding="20">
+                                <tr>
+                                    <td width="50%" valign="top">
+                                        <div>
+                                            <ui:insert name="col1"/>
+                                        </div>
+                                    </td>
+                                    <td width="50%" valign="top">
+                                        <div>
+                                            <ui:insert name="col2"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" valign="top">
+                                        <div>
+                                            <ui:insert name="detalles"/>
+                                        </div>
+                                    </td>
+                                </tr>
 
-                        </table>
-
+                            </table>
+                        </p:panel>
                     </div>
                 </div>
             </h:form>

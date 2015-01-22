@@ -22,11 +22,29 @@
         <ui:define name="tabla">
             <p:dataTable value="#{secuenciaBean.findAll()}" var="m" styleClass="resultado" rendered="#{not empty secuenciaBean.findAll()}">
                 <p:column headerText="Nombre">
-                    <h:outputText value="#{m.nombre}"/>
+                    <h:link value="#{m.nombre}" outcome="edita">
+                        <f:param name="id" value="#{m.id}"/>
+                    </h:link>
                 </p:column>
-
-                <p:column headerText="Acciones">
-                    <h:commandButton action="#{secuenciaBean.preparaEdicion(m)}" value="Editar" rendered="#{autorizador.hayPermisoAccion('EditaOrdenCompra')}"/>
+                <p:column headerText="Rango">
+                    <h:outputText value="#{m.valorInicial} - #{m.valorFinal}"/>
+                </p:column>
+                <p:column headerText="Ultimo Nro">
+                    <h:outputText value="#{m.ultimoNumero}"/>
+                </p:column>
+                <p:column headerText="Tipo">
+                    <h:outputText value="#{m.tipoSecuencia}"/>
+                </p:column>
+                <p:column headerText="Est">
+                    <h:outputText value="#{m.establecimiento}"/>
+                </p:column>
+                <p:column headerText="P. Exp.">
+                    <h:outputText value="#{m.puntoExpedicion}"/>
+                </p:column>
+                <p:column headerText="Vencimiento">
+                    <h:outputText value="#{m.vencimiento}">
+                        <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                    </h:outputText>
                 </p:column>
             </p:dataTable>
         </ui:define>

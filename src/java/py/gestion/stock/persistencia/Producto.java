@@ -57,7 +57,7 @@ public class Producto implements Serializable {
     @ManyToMany
     private List<Familia> familias;
     
-    @Lob
+    @Lob @Basic(fetch = FetchType.LAZY)
     private byte[] imagen;
 
     public Producto() {
@@ -248,7 +248,6 @@ public class Producto implements Serializable {
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
-    
     
 
     @Override

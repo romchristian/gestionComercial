@@ -53,7 +53,11 @@
 
 
                         </div>
-                        <p:graphicImage url="#{resource['img/pulp.png']}" width="120" height="100" style="position: relative;float: inside"/>
+                        <p:graphicImage value="#{productoBean.obtImageStreamedById()}" style="max-width: 100%;max-height: 100%;vertical-align: middle">
+                            <f:param name="productoId" value="#{p.id}"/>
+                        </p:graphicImage>
+                        
+                        
                         <div style="font-size: 10pt;
                              margin-left: 5px;
                              color:#0077b3;

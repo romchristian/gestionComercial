@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{unidadMedidaBean.id}"/>
+        <f:viewAction action="#{unidadMedidaBean.cargaDatos()}"/>
+    </f:metadata>
+
+    <ui:decorate template="/util/plantillaABM.xhtml">
+        <ui:param name="modulo" value="configuracion"/>
+        <ui:param name="titulo" value="Edita #{unidadMedidaBean.actual.nombre}"/>
+        <ui:param name="listado" value="Unidades de Medida"/>
+
+        <ui:define name="acciones">
+            <p:commandButton value="Guardar" action="#{unidadMedidaBean.edit}"  styleClass="botonRojo flotaIzquierda" update="mensajes, panelControles"/>
+        </ui:define>
+
+        <ui:define name="col1">
+
+            <p:inputText id="nombre" value="#{unidadMedidaBean.actual.nombre}" styleClass="descripcionPrincipal"/>
+            <p:watermark for="nombre" value="Nombre" id="watermark"/>
+
+        </ui:define>
+
+
+    </ui:decorate>
+</ui:composition>

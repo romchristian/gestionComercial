@@ -6,29 +6,36 @@
                 xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
                 xmlns:f="http://java.sun.com/jsf/core">
 
+    <f:metadata>
+        <f:viewAction action="#{familiaTreeBean.cargaDatos()}"/>
+    </f:metadata>
 
     <ui:decorate template="/util/plantillaListado.xhtml">
         <ui:param name="modulo" value="configuracion"/>
-        <ui:param name="titulo" value="Puntos de ventas"/>
+        <ui:param name="titulo" value="Familias"/>
+
 
         <ui:define name="acciones">
-            <p:commandButton action="#{puntoVentaBean.preparaCreacion()}" 
+            <p:commandButton action="#{familiaBean.preparaCreacion()}" 
                              value="Nuevo"
                              rendered="#{autorizador.hayPermisoAccion('CreaOrdenCompra')}"
                              styleClass="botonVerde flotaIzquierda"/>
         </ui:define>
 
         <ui:define name="tabla">
-            <p:dataTable value="#{puntoVentaBean.findAll()}" var="p" rendered="#{not empty puntoVentaBean.findAll()}">
+            <p:treeTable value="#{familiaTreeBean.rootNode}" var="d">
                 <p:column headerText="Nombre">
-                    <h:link value="#{p.nombre}" outcome="edita">
-                        <f:param name="id" value="#{p.id}"/>
+                    <h:link value="#{d.nombre}" outcome="edita">
+                        <f:param name="id" value="#{d.id}"/>
                     </h:link>
                 </p:column>
-                <p:column headerText="Estado">
-                    <h:outputText value="#{p.estado}"/>
+                <p:column headerText="Codigo">
+                    <h:outputText value="#{d.cod}" />
                 </p:column>
-            </p:dataTable>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{d.estado}" />
+                </p:column>
+            </p:treeTable>
         </ui:define>
     </ui:decorate>
 </ui:composition>

@@ -31,6 +31,9 @@ public class Familia implements Serializable {
     private Estado estado;
     @Lob
     private byte[] imagen;
+    
+    @ManyToOne
+    private Familia padre;
 
     @ManyToMany(mappedBy = "familias")
     private List<Producto> productos;
@@ -101,6 +104,13 @@ public class Familia implements Serializable {
         this.imagen = imagen;
     }
 
+    public Familia getPadre() {
+        return padre;
+    }
+
+    public void setPadre(Familia padre) {
+        this.padre = padre;
+    }
 
 
     @Override
