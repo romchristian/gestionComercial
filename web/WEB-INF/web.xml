@@ -19,16 +19,26 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>gc/home.xhtml</welcome-file>
+        <welcome-file>puntoventa/sesionTPV/listado.xhtml</welcome-file>
     </welcome-file-list>
     <security-constraint>
         <display-name>Constraint1</display-name>
-        <web-resource-collection>
-            <web-resource-name>home</web-resource-name>
-            <description/>
-            <url-pattern>/gc/*</url-pattern>
-        </web-resource-collection>
         
+        <web-resource-collection>
+            <web-resource-name>puntoventa</web-resource-name>
+            <description/>
+            <url-pattern>/puntoventa/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>configuracion</web-resource-name>
+            <description/>
+            <url-pattern>/configuracion/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>contabilidad</web-resource-name>
+            <description/>
+            <url-pattern>/contabilidad/*</url-pattern>
+        </web-resource-collection>
         <web-resource-collection>
             <web-resource-name>imagenes</web-resource-name>
             <description/>

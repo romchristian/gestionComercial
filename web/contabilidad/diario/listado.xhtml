@@ -10,11 +10,10 @@
         <f:viewAction action="#{diarioTreeBean.cargaDatos()}"/>
     </f:metadata>
 
-    <ui:decorate template="/contabilidad/plantillaListado.xhtml">
+    <ui:decorate template="/util/plantillaListado.xhtml">
+        <ui:param name="modulo" value="contabilidad"/>
+        <ui:param name="titulo" value="Diarios"/>
 
-        <ui:define name="titulo">
-            Diarios
-        </ui:define>
 
         <ui:define name="acciones">
             <p:commandButton action="#{diarioBean.preparaCreacion()}" 
@@ -24,13 +23,16 @@
         </ui:define>
 
         <ui:define name="tabla">
-            <p:tree value="#{diarioTreeBean.rootNode}" var="node" style="width: 90%;height: 80%">
-                <p:treeNode>
-                    <h:link value="#{node.descripcion}" outcome="edita">
-                        <f:param name="id" value="#{node.id}"/>
+            <p:treeTable value="#{diarioTreeBean.rootNode}" var="d">
+                <p:column headerText="Nombre">
+                    <h:link value="#{d.descripcion}" outcome="edita">
+                        <f:param name="id" value="#{d.id}"/>
                     </h:link>
-                </p:treeNode>
-            </p:tree>
+                </p:column>
+                <p:column headerText="Tipo">
+                    <h:outputText value="#{d.tipo}" />
+                </p:column>
+            </p:treeTable>
         </ui:define>
     </ui:decorate>
 </ui:composition>

@@ -8,25 +8,23 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <ui:decorate template="/puntoventa/plantillaABM.xhtml">
+    <ui:decorate template="/util/plantillaABM.xhtml">
+        <ui:param name="modulo" value="puntoventa"/>
+        <ui:param name="titulo" value="Nuevo"/>
+        <ui:param name="listado" value="Sesiones"/>
 
-        <ui:define name="linkListado">       
-            <h:link value="Sesiones" outcome="listado"/>
-        </ui:define>
 
         <ui:define name="acciones">
             <p:commandButton value="Guardar" action="#{sesionTPVBean.edit}"  styleClass="botonRojo flotaIzquierda"/>
         </ui:define>
 
-        <ui:define name="estados">
-        </ui:define>
 
         <ui:define name="col1">
             <h:panelGrid columns="2" cellpadding="10">
                 <h:outputText value="Usuario"/>
-                
-                
-                
+
+
+
                 <h:outputText value="TPV"/>
 
                 <p:selectOneMenu value="#{sesionTPVBean.actual.puntoVenta}" valueChangeListener="#{sesionTPVBean.siCamabiaTPV}">

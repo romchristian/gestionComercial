@@ -7,11 +7,10 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <ui:decorate template="/puntoventa/plantillaListado.xhtml">
+    <ui:decorate template="/util/plantillaListado.xhtml">
+        <ui:param name="modulo" value="configuracion"/>
+        <ui:param name="titulo" value="Secuencias"/>
 
-        <ui:define name="titulo">
-            Secuencia
-        </ui:define>
 
         <ui:define name="acciones">
             <p:commandButton action="#{secuenciaBean.preparaCreacion()}" 
@@ -25,7 +24,7 @@
                 <p:column headerText="Nombre">
                     <h:outputText value="#{m.nombre}"/>
                 </p:column>
-                
+
                 <p:column headerText="Acciones">
                     <h:commandButton action="#{secuenciaBean.preparaEdicion(m)}" value="Editar" rendered="#{autorizador.hayPermisoAccion('EditaOrdenCompra')}"/>
                 </p:column>

@@ -8,21 +8,15 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <ui:decorate template="/puntoventa/plantillaABM.xhtml">
+    <ui:decorate template="/util/plantillaABM.xhtml">
+        <ui:param name="modulo" value="configuracion"/>
+        <ui:param name="titulo" value=" Edita #{puntoVentaBean.actual.nombre}"/>
+        <ui:param name="listado" value="Puntos de Ventas"/> 
+        
         <ui:define name="acciones">
-
-
             <p:commandButton value="Guardar" action="#{puntoVentaBean.edit}"  styleClass="botonRojo flotaIzquierda"/>
-
-
-            <p:commandButton action="listado.xhtml" styleClass="botonRojo flotaDerecha" value="Atras"/>
         </ui:define>
-        <ui:define name="titulo">
-            Punto de Venta
-        </ui:define>
-        <ui:define name="estados">
 
-        </ui:define>
         <ui:define name="cuerpo">
             <h:panelGroup rendered="#{autorizador.hayPermiso('CreaProveedor')}">
 

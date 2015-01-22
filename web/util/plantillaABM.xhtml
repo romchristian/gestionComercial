@@ -6,10 +6,14 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:gp="http://java.sun.com/jsf/composite/gpymes">
 
-    <ui:decorate template="/contabilidad/plantillaModulo.xhtml">
-
-
-
+    
+    
+    <ui:decorate template="/util/plantillaModulo.xhtml">
+        <ui:param name="modulo" value="#{modulo}"/>
+        <ui:define name="menuLateral">
+            <ui:include src="/util/menus/#{modulo}.xhtml"/>
+        </ui:define>
+        
         <ui:define name="cuerpo">
             <h:form>
                 <div style="height: 80px;width: 98%; background-color: #eee">
@@ -17,13 +21,11 @@
                         <div id="breadCrumb0" class="breadCrumb module">
                             <ul>
                                 <li>
-                                    <ui:insert name="linkListado"/>
+                                    <h:link value="#{listado}" outcome="listado"/>
 
                                 </li>
-                                <li>
-                                    <ui:insert name="titulo">
-                                        Nuevo&trade;
-                                    </ui:insert>
+                                <li>                                    
+                                       #{titulo}
                                 </li>
                             </ul>
                         </div>

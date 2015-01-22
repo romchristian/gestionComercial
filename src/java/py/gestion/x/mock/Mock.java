@@ -47,6 +47,7 @@ import py.gestion.adm.servicios.CotizacionDAO;
 import py.gestion.adm.servicios.PaisDAO;
 import py.gestion.contabilidad.persistencia.Diario;
 import py.gestion.contabilidad.persistencia.MetodoPago;
+import py.gestion.contabilidad.persistencia.TipoDiario;
 import py.gestion.puntoventa.persisitencia.PuntoVenta;
 import py.gestion.puntoventa.persisitencia.Secuencia;
 import py.gestion.puntoventa.persisitencia.SesionTPV;
@@ -189,13 +190,16 @@ public class Mock implements Serializable {
 
     public void creaDatosTPV() {
         Diario diario = new Diario();
-        diario.setDescripcion("Diario");
+        diario.setDescripcion("Diario Ventas");
+        diario.setTipo(TipoDiario.VENTA);
         diarioDAO.create(diario);
 
         MetodoPago mp = new MetodoPago();
         mp.setControlEfectivo(true);
+        mp.setNombre("Efectivo");
         mp.setTipoMetodoPago(TipoMetodoPago.EFECTIVO);
         mp.setDiario(diario);
+        mp.setMoneda(monedaDAO.find("Guaraníes"));
         metodoPagoDAO.create(mp);
 
         Secuencia s = new Secuencia();

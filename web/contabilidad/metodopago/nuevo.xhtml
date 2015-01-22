@@ -8,17 +8,15 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <ui:decorate template="/contabilidad/plantillaABM.xhtml">
-        <ui:define name="linkListado">
-            <h:link value="Metodos de Pago" outcome="listado"/>
-        </ui:define>
+    <ui:decorate template="/util/plantillaABM.xhtml">
+        <ui:param name="modulo" value="contabilidad"/>
+        <ui:param name="titulo" value="Nuevo"/>
+        <ui:param name="listado" value="Metodos de Pagos"/>
 
         <ui:define name="acciones">
             <p:commandButton value="Guardar" action="#{metodoPagoBean.edit}"  styleClass="botonRojo flotaIzquierda"/>
         </ui:define>
 
-        <ui:define name="estados">
-        </ui:define>
 
 
         <ui:define name="col1">
@@ -27,7 +25,7 @@
             <br/>
             <br/>
             <h:panelGrid columns="2" cellpadding="10">
-                
+
                 <p:outputLabel value="Diario" for="diario"/>
                 <h:selectOneMenu value="#{metodoPagoBean.actual.diario}" id="diario" >
                     <f:selectItems value="#{diarioBean.itemsAvailableSelectOne}"/>
@@ -37,9 +35,9 @@
                     <f:selectItems value="#{productorEnums.obtTiposMetodosPagos()}"/>
                 </h:selectOneMenu>
                 <p:outputLabel value="Moneda" for="moneda"/>
-                    <p:selectOneMenu value="#{metodoPagoBean.actual.moneda}" id="moneda" >
-                        <f:selectItems value="#{monedaBean.itemsAvailableSelectOne}"/>
-                    </p:selectOneMenu>
+                <p:selectOneMenu value="#{metodoPagoBean.actual.moneda}" id="moneda" >
+                    <f:selectItems value="#{monedaBean.itemsAvailableSelectOne}"/>
+                </p:selectOneMenu>
             </h:panelGrid>
 
         </ui:define>

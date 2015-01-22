@@ -7,7 +7,17 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <ui:decorate template="/puntoventa/plantillaModulo.xhtml">
+    <ui:decorate template="/util/plantillaListado.xhtml">
+        <ui:param name="modulo" value="configuracion"/>
+        <ui:param name="titulo" value="Puntos de ventas"/>
+        
+        <ui:define name="acciones">
+            <p:commandButton action="#{puntoVentaBean.preparaCreacion()}" 
+                             value="Nuevo"
+                             rendered="#{autorizador.hayPermisoAccion('CreaOrdenCompra')}"
+                             styleClass="botonVerde flotaIzquierda"/>
+        </ui:define>
+        
         <ui:define name="cuerpo">
             <h:panelGroup rendered="#{autorizador.hayPermiso('VisualizaOrdenCompra')}">
                 <h:form>

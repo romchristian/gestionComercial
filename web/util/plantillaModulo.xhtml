@@ -8,24 +8,13 @@
                 xmlns:gp="http://java.sun.com/jsf/composite/gpymes">
 
     <ui:define name="menuModulos">
-        <ui:include src="/util/modulos.xhtml"/>
+        <ui:include src="/util/modulos.xhtml">
+            <ui:param name="modulo" value="#{modulo}"/>
+        </ui:include>
     </ui:define>
     
-    <ui:define name="menuLateral">
-        
-
-        <h:outputText value="General" style="font-size: 14px;color: #0077b3; padding-left: 10px;font-weight: bold;margin-bottom: 10px"/>
-        <br/>
-
-       
-        <h:outputText value="Configuracion" style="font-size: 14px;color: #0077b3; padding-left: 10px;font-weight: bold;margin-bottom: 10px"/>
-        <br/>
-
-        <ul>
-            <li><a href="/gestionComercial/contabilidad/diario/listado.xhtml" class="menuLabel">Diarios</a></li>
-            <li><a href="/gestionComercial/contabilidad/metodopago/listado.xhtml" class="menuLabel">Metodos de Pagos</a></li>
-        </ul>
-
+    <ui:define name="menuLateral">        
+        <ui:insert name="menuLateral"/>
     </ui:define>
 
     <ui:define name="cuerpo">

@@ -30,6 +30,18 @@ public class Diario implements Serializable {
     @Enumerated(EnumType.STRING)
     private TipoDiario tipo;
 
+    public Diario() {
+    }
+    
+    
+
+    public Diario(String descripcion, TipoDiario tipo) {
+        this.descripcion = descripcion;
+        this.tipo = tipo;
+    }
+    
+    
+
     public Long getId() {
         return id;
     }

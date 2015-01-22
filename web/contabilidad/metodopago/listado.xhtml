@@ -7,11 +7,9 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <ui:decorate template="/puntoventa/plantillaListado.xhtml">
-
-        <ui:define name="titulo">
-            Métodos Pago
-        </ui:define>
+    <ui:decorate template="/util/plantillaListado.xhtml">
+        <ui:param name="modulo" value="contabilidad"/>
+        <ui:param name="titulo" value="Metodos de Pagos"/>
 
         <ui:define name="acciones">
             <p:commandButton action="#{metodoPagoBean.preparaCreacion()}" 

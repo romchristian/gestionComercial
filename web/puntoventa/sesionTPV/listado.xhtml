@@ -7,11 +7,11 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <ui:decorate template="/puntoventa/plantillaListado.xhtml">
+    <ui:decorate template="/util/plantillaListado.xhtml">
+        <ui:param name="modulo" value="puntoventa"/>
+        <ui:param name="titulo" value="Sesiones"/>
 
-        <ui:define name="titulo">
-            Sesiones
-        </ui:define>
+
 
         <ui:define name="acciones">
             <p:commandButton action="#{sesionTPVBean.preparaCreacion()}" 

@@ -13,6 +13,7 @@ import org.primefaces.component.tree.Tree;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import py.gestion.contabilidad.persistencia.Diario;
+import py.gestion.contabilidad.persistencia.TipoDiario;
 import py.gestion.contabilidad.servicio.DiarioDAO;
 import py.gestion.utils.web.BeanGenerico;
 import py.gestion.utils.servicios.AbstractDAO;
@@ -33,7 +34,7 @@ public class DiarioTreeBean extends BeanGenerico<Diario> {
     @Override
     public String cargaDatos() {
         List<Diario> roots = ejb.findAllRoots();
-        rootNode = new DiarioTreeNode("Root", null);
+        rootNode = new DefaultTreeNode(new Diario("Diarios", TipoDiario.VENTA), null);
         for (Diario d : roots) {
             TreeNode t1 = createTree(d, rootNode);
         }
@@ -41,7 +42,7 @@ public class DiarioTreeBean extends BeanGenerico<Diario> {
     }
 
     public TreeNode createTree(Diario treeObj, TreeNode rootNode) {
-        TreeNode newNode = new DiarioTreeNode(treeObj, rootNode);
+        TreeNode newNode = new DefaultTreeNode(treeObj, rootNode);
 
         List<Diario> childNodes1 = ejb.findAllChildren(treeObj);
 

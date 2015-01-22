@@ -12,17 +12,16 @@
         <f:viewAction action="#{metodoPagoBean.cargaDatos()}"/>
     </f:metadata>
 
-    <ui:decorate template="/contabilidad/plantillaABM.xhtml">
-        <ui:define name="linkListado">
-            <h:link value="Metodos de Pago" outcome="listado"/>
-        </ui:define>
+    <ui:decorate template="/util/plantillaABM.xhtml">
+        <ui:param name="modulo" value="contabilidad"/>
+        <ui:param name="titulo" value=" Edita #{metodoPagoBean.actual.nombre}"/>
+        <ui:param name="listado" value="Metodos de Pagos"/>
 
         <ui:define name="acciones">
             <p:commandButton value="Guardar" action="#{metodoPagoBean.edit}"  styleClass="botonRojo flotaIzquierda"/>
         </ui:define>
 
-        <ui:define name="estados">
-        </ui:define>
+
 
 
         <ui:define name="col1">

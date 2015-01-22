@@ -8,17 +8,15 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <ui:decorate template="/puntoventa/plantillaABM.xhtml">
-        <ui:define name="linkListado">
-            <a href="/syscvsa/puntoventa/secuencia/listado.xhtml">Secuencias</a>
-        </ui:define>
+    <ui:decorate template="/util/plantillaABM.xhtml">
+        <ui:param name="modulo" value="configuracion"/>
+        <ui:param name="titulo" value="Nuevo"/>
+        <ui:param name="listado" value="Secuencias"/> 
 
         <ui:define name="acciones">
             <p:commandButton value="Guardar" action="#{secuenciaBean.edit}"  styleClass="botonRojo flotaIzquierda"/>
         </ui:define>
 
-        <ui:define name="estados">
-        </ui:define>
 
 
         <ui:define name="col1">
