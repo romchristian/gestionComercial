@@ -279,6 +279,7 @@ public class TerminalBean implements Serializable {
     public String buscar() {
         productoActual = productoDAO.findPorCodigoEstricto(codigoActual);
         agregaDetalle();
+        codigoActual = "";
         return null;
     }
 
