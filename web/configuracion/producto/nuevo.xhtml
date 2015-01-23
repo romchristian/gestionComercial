@@ -6,14 +6,18 @@
                 xmlns:gp="http://java.sun.com/jsf/composite/gpymes"
                 xmlns:f="http://java.sun.com/jsf/core">
 
+
+
     <ui:decorate template="/util/plantillaABM.xhtml">
         <ui:param name="modulo" value="configuracion"/>
         <ui:param name="titulo" value="Nuevo"/>
         <ui:param name="listado" value="Productos"/>
         <ui:param name="enctype" value="multipart/form-data"/>
 
+
+
         <ui:define name="acciones">
-            <p:commandButton value="Guardar" action="#{productoBean.edit}"  styleClass="botonRojo flotaIzquierda" update="mensajes, panelControles"/>
+            <p:commandButton value="Guardar" action="#{productoBean.edit}"  styleClass="botonRojo flotaIzquierda" update="mensajes, panelControles" ajax="false"/>
         </ui:define>
 
         <ui:define name="col1">
@@ -63,15 +67,19 @@
 
 
 
-                <div class="raised" style="height: 100px; width: 150px; text-align: center;vertical-align: middle">
-                    <p:graphicImage value="#{productoBean.obtImageStreamed()}" style="max-width: 100%;max-height: 100%;vertical-align: middle"/>
+                <div class="raised" style="height: 100px; width: 100px; text-align: center;vertical-align: middle;position: relative">
+
+                    
+                    <a href="#" id="upload_link" style="z-index: 2;overflow:hidden;position: absolute;top: 0;left: 0"><img src="#{resource['img/camera.png']}" width="28px" height="28px"/></a>
+                    
+
+                    <p:graphicImage library="img" name="no_disponible.png"  binding="#{image}" style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0"/>
                 </div>
                 <br></br>
-                <p:fileUpload value="#{productoBean.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" immediate="true"/> 
-                <p:commandButton value="Subir" ajax="false"
-                                 actionListener="#{productoBean.upload()}">
-                </p:commandButton>
 
+                <p:fileUpload binding="#{upload}" mode="simple" id="upload"
+                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                              value="#{productoBean.file}" style="display: none"/>
 
             </h:panelGroup>
 
@@ -85,6 +93,41 @@
                                 lblRemover="Quitar"
                                 toggleable="true"/>
             </p:panel>
+
+
+
+
+            <script type="text/javascript">
+                function readPicture(input, output)
+                {
+                    if (input.files &amp;&amp; input.files[0])
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e)
+                        {
+                            output.attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+
+                jQuery(document).ready(function () {
+
+                    jQuery("#upload_link").on('click', function (e) {
+                       
+                        e.preventDefault();
+                        jQuery("[id='#{upload.clientId}']").trigger('click');
+                    });
+
+                    jQuery("[id='#{upload.clientId}']").change(
+                            function ()
+                            {
+
+                                readPicture(this, jQuery("[id='#{image.clientId}']"));
+                            });
+                });
+
+            </script>
 
         </ui:define>
     </ui:decorate>
